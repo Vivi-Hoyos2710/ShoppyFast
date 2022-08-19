@@ -1,4 +1,5 @@
 import React,{useState} from "react"
+import { Link } from "react-router-dom";
 import { FormGroup,Input,Label,Button, Container} from "reactstrap"
 const SearchBar = ({searchVar,setSearchVar,data}) => {
     const busqueda=(entrada)=>{
@@ -20,7 +21,12 @@ const SearchBar = ({searchVar,setSearchVar,data}) => {
                 />
                 
             </FormGroup>
-            <Button color="danger" href={`producto/${searchVar}`}>Search it!</Button>
+            <Link to={`/producto/${searchVar}`}>
+                <Button color="danger" >Search it!</Button>
+            </Link>
+            <Link to="/carrito">
+                <Button color="primary" >Go to Trolley</Button>
+            </Link>
         </form>
     )
 }
