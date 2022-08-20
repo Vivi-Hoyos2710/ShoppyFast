@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Container } from 'reactstrap'
+import { Container,Card, CardBody, CardTitle, Button, CardText, } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 import productsList from "../util/db/products";
-const ProductInfo = ({setCarrito, carrito}) => {
+const ProductInfo = ({ setCarrito, carrito }) => {
     const { id } = useParams();
     const [productInfo, setProductInfo] = useState({
         id: "00",

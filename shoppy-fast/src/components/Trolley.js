@@ -1,47 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardBody, CardTitle, Button, CardText } from 'reactstrap';
+import { ListGroup,Container, ListGroupItemHeading, ListGroupItem, ListGroupItemText } from 'reactstrap';
 
-const Trolley = ({ carrito }) => { 
+const Trolley = ({ carrito, setCarrito }) => {
 
-const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState(0);
 
-useEffect(() => {
-    const hola = () => {
-        setTotal(carrito.reduce((obj, cur) => (obj + cur.price), 0))
-    }
-    hola()
-}
-, [carrito]);
-console.log(total);
-
-return (
-    <React.Fragment>
-    {carrito.map(producto => (
-        <Card
-            style={{
-                width: '18rem'
-            }}
-        >
-            <img
-                alt="Sample"
-                src={producto.img}
-            />
-            <CardBody>
-                <CardTitle tag="h5">
-                    {producto.name}
-                </CardTitle>
-                <CardText>
-                    {producto.author}
-                </CardText>
-                <CardText>
-                    {producto.price}
-                </CardText>
-            </CardBody>
-        </Card>)
-    )
+    useEffect(() => { ///calcular total
+        const hola = () => {
+            setTotal(carrito.reduce((obj, cur) => (obj + cur.price), 0))
         }
+        hola()
+    }
+        , [carrito]);
+    console.log(total);
+    ///
+    const eliminarItemCarrito = (id) => {
+        const arr = carrito.filter((item) => item.id !== id);
+        setCarrito(arr);
+    };
+    return (<>
+        <h1>Carrito</h1>
+        < Container >
+            <span>Total Price of your Cart</span>
+            <span>$ {total}</span>
+        </Container>
+        <React.Fragment>
+            {carrito.map(producto => (
+                <ListGroup>
+                    <ListGroupItem>
+                        <ListGroupItemHeading>
+                        <img src={producto.img} alt="img" /><span>{producto.name}</span>
+                        </ListGroupItemHeading>
+                        <ListGroupItemText>
+                            <span><h3>Price</h3>{producto.price}</span>
+                        </ListGroupItemText>
+                    </ListGroupItem></ListGroup>)
 
-    </React.Fragment>)
+            )
+            }
+
+        </React.Fragment ></>)
 }
 
 export default Trolley
