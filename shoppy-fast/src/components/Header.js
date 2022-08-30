@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NavbarBrand} from 'reactstrap'
+import { Col, Container, Navbar, NavbarBrand, Row} from 'reactstrap'
 import {FaShoppingCart} from 'react-icons/fa';
 const Header = () => {
     return (
@@ -22,6 +22,12 @@ const Header = () => {
             </NavbarBrand>
             
         </Navbar>
+        <Container>
+            <Row>
+                <Col >
+                </Col>
+            </Row>
+        </Container>
         </div>
     )
 }

@@ -11,11 +11,12 @@ import ProductInfo from './components/ProductInfo';
 function App() {
   const [carrito, setCarrito] = useState([]);
   const [searchVar, setSearchVar] = useState("hola"); //searchvar es el id del producto en la barra de búsqueda
-
+  const cantidadCarrito=carrito.length;
+  console.log(cantidadCarrito); //Tamaño arreglo de productos en carrito :)
     return (
       <div className="App">
         <BrowserRouter>
-          <Header />
+          <Header cantidad={cantidadCarrito}/>
           <Container><h1>Welcome to ShoppyFast!<br />lets start entering your product code!</h1>
             <SearchBar searchVar={searchVar} setSearchVar={setSearchVar} />
           </Container>

@@ -1,7 +1,8 @@
 import React,{useState} from "react"
 import { Link } from "react-router-dom";
 import { FormGroup,Input,Label,Button, Container} from "reactstrap"
-const SearchBar = ({searchVar,setSearchVar,data}) => {
+import { BsFillCartFill } from "react-icons/bs";
+const SearchBar = ({searchVar,setSearchVar}) => {
     const busqueda=(entrada)=>{
         console.log(searchVar);
         setSearchVar(entrada);
@@ -21,12 +22,16 @@ const SearchBar = ({searchVar,setSearchVar,data}) => {
                 />
                 
             </FormGroup>
+            <Container className="">
             <Link to={`/producto/${searchVar}`}>
                 <Button color="danger" >Search it!</Button>
             </Link>
             <Link to="/carrito">
-                <Button color="primary" >Go to Trolley</Button>
+                <Button color="primary" >Go to Trolley<BsFillCartFill/></Button>
             </Link>
+            </Container>
+
+            
         </form>
     )
 }
