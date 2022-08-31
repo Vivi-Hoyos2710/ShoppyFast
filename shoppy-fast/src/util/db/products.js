@@ -1,6 +1,6 @@
 const productsList = [
   {
-    id: 3,
+    id: 1,
     name: "Leche deslactosada bolsa ALPINA 1100 ml",
     marca: "ALPINA ",
     description: "Leche deslactosada y descremada. Especial para personas que requieren reducir el consumo de lactosa. ",
@@ -10,7 +10,7 @@ const productsList = [
 
   },
   {
-    id: 4,
+    id: 2,
     name: "Leche Semidescremada Uat Four ALPINA 4000 ml",
     marca: "ALPINA ",
     description: "Leche semidescremada.Este tipo de leches son muy recomendables para personas que sufren alteraciones de colesterol elevado,  sobrepeso u obesidad.",
@@ -21,7 +21,7 @@ const productsList = [
   }
   ,
   {
-    id: 5,
+    id: 3,
     name: "Leche de coco x 250 ml",
     marca: "Antillana ",
     description: "Leche de coco ideal para preparacion, baja en sodio",
@@ -31,7 +31,7 @@ const productsList = [
 
   },
   {
-    id: 6,
+    id: 4,
     name: "LECHE MALTEADA SABORIZADA SIXP MILO 1080 ml",
     marca: "Milo ",
     description: "MILO® en cajita es leche malteada perfecta para la lonchera. Proporcióna la energía necesaria a los niños en etapa de crecimiento. * Malta * Vitaminas y minerales * Calcio * Cocoa.",
@@ -41,7 +41,7 @@ const productsList = [
 
   },
   {
-    id: 7,
+    id: 5,
     name: "CAFE MOLIDO BALANCEADO COLINA JUAN VALDEZ 340 gr",
     marca: "Juan Valdez ",
     description: "Cada cosecha de café de Colombia produce, entre sus frutos, un pequeño porcentaje de granos 'Caracolito'. Estos granos se reconocen por su pequeño tamaño y forma redonda, atributos que resultan de la formación de una sola semilla en la cereza. partiendo de este exótico grano, Juan Valdez ha desarrollado 'Colina', un cafe de suave textura, acidez media y cuerpo equilibrado.",
@@ -51,7 +51,7 @@ const productsList = [
 
   },
   {
-    id: 8,
+    id: 6,
     name: "Cafe Todo En Uno Light COLCAFE 280 gr",
     marca: "ColCafe ",
     description: "Café instántaneo con crema no lactea y endulzado con Splenda. Sin Colesterol y Sin Lactosa Con tapa dosificadora para fácil adición",
@@ -61,7 +61,7 @@ const productsList = [
 
   },
   {
-    id: 9,
+    id: 7,
     name: "Mantequilla Esparsible Line Vaso X 250 gr",
     marca: "Rama ",
     description: " 0% colesterol, 25% menos de grasa con relación a una mantequilla normal.",
@@ -71,7 +71,7 @@ const productsList = [
 
   },
   {
-    id: 10,
+    id: 8,
     name: "Azucar Organica PROVIDENCIA 850 gr",
     marca: "Providencia ",
     description: "Azúcar Morena 100% Orgánica sin Pesticidas ni Colorantes.Los productos orgánicos son mínimamente procesados y no contienen ingredientes artificiales o preservativos. Estos son alimentos de alta calidad ya que se cultivan en tierra sana.",
@@ -81,7 +81,7 @@ const productsList = [
 
   },
   {
-    id: 11,
+    id: 9,
     name: "PANELA PULVERIZADA ORGANICA D ORIGENN 500 Gramos",
     marca: "D'ORIGENN ",
     description: "Disfruta de un producto orgánico y nutritivo proveniente de la caña, para preparaciones de bebidas frías y calientes, también es ideal para repostería y culinaria.   ",

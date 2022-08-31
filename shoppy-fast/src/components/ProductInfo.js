@@ -13,18 +13,39 @@ const ProductInfo = ({ setCarrito, carrito }) => {
         img: "https://www.freeiconspng.com/thumbs/error-icon/sign-red-error-icon-1.png",
         amount: 0,
     });
+    console.log(productsList.filter((item) => (item.id == id))); //prueba
+    const data = productInfo;
+    useEffect(() => {
+        const data = productsList.filter((item) => (item.id == id))[0];//ESTO se cambiará con la bdd
+        const conseguirDatos = async () => {
+            if (data) {
+                setProductInfo(data);
+            }
+        };
+        conseguirDatos();
+    }, [id])
+    /* useEffect(() => {
+        const conseguirDatos = async () => {
+            const data = await getProduct(id);
+            console.log(data);
+            if (data) {
+                setProductInfo(data[0]);
+            }
+        };
+        conseguirDatos();
+    }, [id]); */
 
     return (
         <div className='containerFluid'>
             <Container className='lg-6'>
-                {productInfo?(<>
+                {productInfo ? (<>
                     <Container>
                         <Card className="my-2" color="danger" outline style={{ width: '18rem' }}>
                             <CardHeader tag="h2">{productInfo.name}</CardHeader>
                             <CardBody>
                                 <Row>
                                     <Col xs="6">
-                                        <img src={productInfo.imgURL} alt="img" width= "100%" />
+                                        <img src={productInfo.imgURL} alt="img" width="100%" />
                                     </Col>
                                     <Col>
                                         <CardText>
