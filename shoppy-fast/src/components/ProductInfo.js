@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Container, Card, CardBody, CardTitle, Button, CardText, CardHeader, Row, Col, } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 import productsList from "../util/db/products";
-import { getProduct } from './Services/ProductInfoServices';
+import { getProduct } from '../Services/ProductInfoServices';
+
 const ProductInfo = ({ setCarrito, carrito }) => {
     const { id } = useParams();
     const [productInfo, setProductInfo] = useState({
@@ -12,29 +13,18 @@ const ProductInfo = ({ setCarrito, carrito }) => {
         img: "https://www.freeiconspng.com/thumbs/error-icon/sign-red-error-icon-1.png",
         amount: 0,
     });
-    const data = productInfo;
-    //console.log(productsList.filter((item) => (item.id == id))); //prueba
-    useEffect(() => {
-        const conseguirDatos = async () => {
-            const data = await getProduct(id);
-            console.log(data);
-            if (data) {
-                setProductInfo(data[0]);
-            }
-        };
-        conseguirDatos();
-    }, [id])
+
     return (
         <div className='containerFluid'>
             <Container className='lg-6'>
-                {data ? (<>
+                {productInfo?(<>
                     <Container>
                         <Card className="my-2" color="danger" outline style={{ width: '18rem' }}>
                             <CardHeader tag="h2">{productInfo.name}</CardHeader>
                             <CardBody>
                                 <Row>
                                     <Col xs="6">
-                                        <img src={productInfo.imgURL} alt="${productInfo._id}" width= "100%" />
+                                        <img src={productInfo.imgURL} alt="img" width= "100%" />
                                     </Col>
                                     <Col>
                                         <CardText>
