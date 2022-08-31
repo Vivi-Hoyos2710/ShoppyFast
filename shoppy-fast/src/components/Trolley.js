@@ -20,19 +20,18 @@ const Trolley = ({ carrito, setCarrito }) => {
         setCarrito(arr);
     };
     return (<>
-
-        < Container >
-            <BsFillCartFill /> 
-            <span>Total Price of your Cart</span>
+        < Container className='encabezado_carrito' >
+            <BsFillCartFill/> 
+            <span><b>Total Price of your Cart :</b></span>
             <span>$ {total}</span>
         </Container>
         <React.Fragment>
-            {carrito.map(producto => (
-            <Table className='tabla_carro'>
+            <div className='container_table'>
+        <Table className='tabla_carro'>
                 <thead>
                     <tr>
                         <th>
-                        
+                        Imagen del producto
                         </th>
                         <th>
                         Nombre Producto
@@ -45,10 +44,11 @@ const Trolley = ({ carrito, setCarrito }) => {
                         </th>
                     </tr>
                 </thead>
+            {carrito.map(producto => (
                 <tbody>
                     <tr>
                         <th scope="row">
-                        <img src={producto.imgURL} alt="img" width="10%" />
+                        <img src={producto.imgURL} alt="img" width="100px" />
                         </th>
                         <td>
                         <span>{producto.name}</span>
@@ -62,10 +62,11 @@ const Trolley = ({ carrito, setCarrito }) => {
                     </tr>
 
                 </tbody>
-            </Table>
             )
             )
             }
+            </Table>
+            </div>
 
         </React.Fragment ></>)
 }

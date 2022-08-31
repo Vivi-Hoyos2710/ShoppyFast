@@ -3,12 +3,29 @@
     padding: 0;
 }
 
+.container_table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.encabezado_carrito{
+    font-size:19px; 
+    margin:30px;
+    display: flex;
+    justify-content: left;
+    color:rgb(231, 81, 81);
+
+}
+
+b{
+margin:10px;
+}
+
 .tabla_carro{
     text-align: center;
-
+    width: 80% !important;
 }
 
-.BsFillCartFill{
-width: 60
-%;
-}
+
+
