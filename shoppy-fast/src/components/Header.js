@@ -1,24 +1,23 @@
 import React from 'react'
 import { Col, Container, Navbar, NavbarBrand, Row} from 'reactstrap'
-import {FaShoppingCart} from 'react-icons/fa';
 const Header = () => {
     return (
         <div>
         <Navbar
             className="navbar"
-            color="dark"
-            dark
+            color="info"
+            
         >
             <NavbarBrand href="/" className='mr-auto'>
                 <img
                     alt="logo"
-                    src="../logo-shoppy.png"
+                    src="../LogoShoppyFast_.png"
                     style={{
-                        height: 60,
-                        width: 60,
+                        height: 70,
+                        width: 150,
                     }}
                 />
-                ShoppyFast
+                
             </NavbarBrand>
             
         </Navbar>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, CardBody, CardTitle, Button, CardText, CardHeader, Row, Col, } from 'reactstrap'
+import { Container, Card, CardBody, Spinner, Button, CardText, CardHeader, Row, Col, } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 import productsList from "../util/db/products";
 import { getProduct } from '../Services/ProductInfoServices';
@@ -34,29 +34,49 @@ const ProductInfo = ({ setCarrito, carrito }) => {
         };
         conseguirDatos();
     }, [id]); */
-
+const carga= (evento)=>{
+    <>
+    <Spinner
+    color="primary"
+    type="grow">
+    Loading...
+  </Spinner>
+  <br/>
+  <Spinner
+    color="primary"
+    type="grow"
+  >
+    Loading...
+  </Spinner>
+  </>
+}
     return (
-        <div className='containerFluid'>
+        <div className='containerFluid' onLoad={carga}>
             <Container className='lg-6'>
                 {productInfo ? (<>
                     <Container>
-                        <Card className="my-2" color="danger" outline style={{ width: '18rem' }}>
-                            <CardHeader tag="h2">{productInfo.name}</CardHeader>
+                        <Card className='my-2'color="danger" outline style={{ width: '30rem' }}>
+                            <CardHeader tag="h3">{productInfo.name}</CardHeader>
                             <CardBody>
                                 <Row>
-                                    <Col xs="6">
+                                    <Col Col sm="12" md={{ size: 8, offset: 2 }}>
                                         <img src={productInfo.imgURL} alt="img" width="100%" />
                                     </Col>
                                     <Col>
                                         <CardText>
-                                            <div>Price {productInfo.price}</div>
-                                            <div>Brand {productInfo.marca}</div>
-                                            <h3>Features {productInfo.description}</h3>
+                                            <div><b>Price:</b>
+                                            {productInfo.price}</div>
+                                            <div><b>Brand:</b>
+                                            {productInfo.marca}</div>
+                                            <div><b>Features:</b>
+                                            <p>"{productInfo.description}"</p></div>
+                                            <br/>
                                         </CardText>
                                     </Col>
-                                </Row>
-
+                                <Col Col sm="12" md={{ size: 8, offset: 2 }}>
                                 <Button color="danger" onClick={() => setCarrito([...carrito, productInfo])}>Add to Cart</Button>
+                                </Col>
+                                </Row>
                             </CardBody>
                         </Card>
                     </Container>

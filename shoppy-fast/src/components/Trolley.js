@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ListGroup,Container, ListGroupItemHeading, ListGroupItem, ListGroupItemText ,Table} from 'reactstrap';
+import { Link } from "react-router-dom";
+import {Container,Table,Button} from 'reactstrap';
 import '../Estilos/Style.css';
 import { BsFillCartFill } from "react-icons/bs";
 const Trolley = ({ carrito, setCarrito }) => {
@@ -21,6 +22,11 @@ const Trolley = ({ carrito, setCarrito }) => {
     };
     return (<>
         < Container className='encabezado_carrito' >
+        
+        <Link to="/userInfo">
+            <Button color="primary" >Crear Factura
+            </Button>
+        </Link>
             <BsFillCartFill/> 
             <span><b>Total Price of your Cart :</b></span>
             <span>$ {total}</span>
