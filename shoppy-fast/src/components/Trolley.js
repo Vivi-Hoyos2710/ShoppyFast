@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import {Container,Table,Button} from 'reactstrap';
 import '../Estilos/Style.css';
 import { BsFillCartFill } from "react-icons/bs";
-const Trolley = ({ carrito, setCarrito }) => {
+const Trolley = ({ carrito, setCarrito,total,setTotal}) => {
 
-    const [total, setTotal] = useState(0);
+    
 
     useEffect(() => { ///calcular total
         const hola = () => {

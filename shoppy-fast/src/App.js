@@ -18,21 +18,21 @@ const initialForm = {
 
 function App() {
   const [carrito, setCarrito] = useState([]);
-  const [searchVar, setSearchVar] = useState("hola"); //searchvar es el id del producto en la barra de búsqueda
+  const [searchVar, setSearchVar] = useState(""); //searchvar es el id del producto en la barra de búsqueda
+  const [total, setTotal] = useState(0);
   const cantidadCarrito=carrito.length;
-  console.log(cantidadCarrito); //Tamaño arreglo de productos en carrito :)
   const [infoUser,setInfoUser]=useState(initialForm);
-  console.log(infoUser);
+  
     return (
       <div className="App">
         <BrowserRouter>
           <Header/>
           <Routes>
             <Route path='/' element={<SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={cantidadCarrito}/>}/>
-            <Route path='carrito' element={<Trolley carrito={carrito} setCarrito={setCarrito} />} />
+            <Route path='carrito' element={<Trolley total={total} setTotal={setTotal} carrito={carrito} setCarrito={setCarrito} />} />
             <Route path='/producto/:id' element={<div><SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={cantidadCarrito}/><ProductInfo setCarrito={setCarrito} carrito={carrito} /></div>} />
             <Route path='userInfo' element={<UserForm setInfoUser={setInfoUser} infoUsuario={infoUser}/>} />
-            <Route path='factura' element={<Bill infoUsuario={infoUser} carrito={carrito}/>}/>
+            <Route path='factura' element={<Bill infoUser={infoUser} carrito={carrito} total={total}/>}/>
           </Routes>
         </BrowserRouter>
       </div>

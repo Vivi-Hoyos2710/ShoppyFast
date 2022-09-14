@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Input, FormGroup, Label, Form, Container, Row, Col } from 'reactstrap';
+import { useNavigate } from "react-router-dom";
+import { Input, FormGroup, Label, Form, Container, Row, Col , Button } from 'reactstrap';
 import { userSchema } from "../Validations/UserValidation";
 
 const UserForm = ({setInfoUser,infoUsuario}) => {
-
+    
+    const navigate = useNavigate();
     const crearUsuario = async (event) => {
         event.preventDefault(); //Cancela el evento de submit si hay errores en formulario.
         let formData = {
@@ -17,6 +19,7 @@ const UserForm = ({setInfoUser,infoUsuario}) => {
         console.log(isValid);
         if (isValid) {
             setInfoUser(formData);
+            navigate('/factura');
         }
 
     }
@@ -75,7 +78,7 @@ const UserForm = ({setInfoUser,infoUsuario}) => {
                     <Label>
                         Número de celular
                     </Label>
-               </Col> 
+                </Col> 
                     <Input
                         type='number'
                     />
@@ -90,7 +93,7 @@ const UserForm = ({setInfoUser,infoUsuario}) => {
                     <Label>
                         E-mail
                     </Label>
-                  </Col>
+                </Col>
                     <Input 
                         id="emailInput"
                         name="E-mail"
@@ -103,9 +106,8 @@ const UserForm = ({setInfoUser,infoUsuario}) => {
                     <Label>
                         <br/>
                     </Label>
-                  </Col>
-                
-                <Input  type='submit' value="Enviar formulario" />
+                </Col>
+                <Button  type='submit' >Mostrar Factura</Button>
                 </Col>
                 </Row> 
                 
