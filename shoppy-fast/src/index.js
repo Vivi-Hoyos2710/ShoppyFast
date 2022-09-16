@@ -4,8 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SearchBar from './components/Search';
-import { Container } from 'reactstrap';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { Input, FormGroup, Label, Form, Container, Row, Col , Button } from 'reactstrap';
 import { userSchema } from "../Validations/UserValidation";
 
@@ -17,9 +17,8 @@ const UserForm = ({setInfoUser,infoUsuario}) => {
         };
         const esquema= await userSchema.validate(formData).catch((err) => {
             console.log(err.errors);
-          });
+        });
         const isValid = await userSchema.isValid(formData);
-        console.log(isValid);
         if (isValid) {
             setInfoUser(formData);
             navigate('/factura');
@@ -27,7 +26,7 @@ const UserForm = ({setInfoUser,infoUsuario}) => {
 
     }
     return (
-        <Container className="">
+        <Container style={{ marginTop: '70px'}}>
             <Form onSubmit={crearUsuario}>
                 <Row>
                     <Col xs="6">
@@ -113,6 +112,14 @@ const UserForm = ({setInfoUser,infoUsuario}) => {
                 <Button  type='submit' >Mostrar Factura</Button>
                 </Col>
                 </Row> 
+                <Row style={{ marginTop: '30px'}}>
+                <Col>
+                <Link to="/carrito">
+                        <Button color="danger" >Volver
+                        </Button>
+                </Link>
+                </Col>
+            </Row>
                 
             </Form>
         </Container>

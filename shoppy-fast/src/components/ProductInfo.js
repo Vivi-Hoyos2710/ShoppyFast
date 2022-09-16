@@ -10,7 +10,6 @@ const ProductInfo = ({ setCarrito, carrito,agregarProducto }) => {
     const [productInfo, setProductInfo] = useState({});
     const [dato, hayDatos] = useState(false);
 
-    //console.log(productsList.filter((item) => (item.id == id))); //prueba
     // const data = productInfo;
     // useEffect(() => {
     //     const data = productsList.filter((item) => (item.id == id))[0];//ESTO se cambiará con la bdd

@@ -1,18 +1,22 @@
 import React,{useEffect,useState} from 'react'
-import { Card, CardFooter, CardHeader, ListGroup,ListGroupItem,Col,Row } from 'reactstrap'
+import { Link } from "react-router-dom";
+import { Button,Card, CardFooter, CardHeader, ListGroup,ListGroupItem,Col,Row ,Container} from 'reactstrap'
 import {crearFactura}from '../Services/ProductInfoServices'
 export const Bill = ({ infoUser, carrito,total }) => {
-    const [iva,setIva]= useState({});
-    useEffect(async ()=>{
-        const datos= await crearFactura({
-            "products" : carrito
-        });
-        setIva(datos);
+    const [facturaIva,setFacturaIva]= useState({});
+    useEffect(()=>{
+        const enviarDatos=async()=>{
+            const datos= await crearFactura({
+                "products" : carrito
+            });
+            setFacturaIva(datos);
+        }
+        enviarDatos();
     },[]);
-    console.log(iva);
-    //console.log(infoUser);
+    const ivaAbs= facturaIva.ivaTotal;
+    const totalConIva= facturaIva.precioTotal;
     return (
-        <div>
+        <Container  className="align-items-center" style={{ marginTop: '60px'}}>
             <Card
                 style={{
                     width: '18rem'
@@ -32,15 +36,15 @@ export const Bill = ({ infoUser, carrito,total }) => {
                     </CardHeader>
                     <CardHeader>
                     <Row>
-                    <Col xs="6">Nombre</Col>
-                    <Col xs="6">Precio</Col>
+                    <Col xs="6"><b>Nombre</b></Col>
+                    <Col xs="6"><b>Precio</b></Col>
                     </Row>
                 </CardHeader>
 
                 <ListGroup >
                 
                     {carrito.map(producto => (
-                    <ListGroupItem>
+                    <ListGroupItem key={producto.item.id}>
                     <Row>
                     <Col xs="6">{producto.item.name}</Col>
                     <Col xs="6">{producto.item.price}</Col>
@@ -57,17 +61,23 @@ export const Bill = ({ infoUser, carrito,total }) => {
                     <ListGroupItem>
                     <Row>
                     <Col xs="6">IVA 19%</Col>
-                    <Col xs="6">{total*(iva)}</Col>
+                    <Col xs="6">{ivaAbs}</Col>
                     </Row>
                     </ListGroupItem>
                 </ListGroup>
                 <CardFooter>
                 <Row>
                     <Col xs="6">Total</Col>
-                    <Col xs="6">{total*(1+iva)}</Col>
+                    <Col xs="6">{totalConIva}</Col>
                     </Row>
                 </CardFooter>
             </Card>
-        </div>
+            <Row style={{ marginTop: '30px'}}>
+                <Link to="/userInfo">
+                        <Button color="danger" >Volver
+                        </Button>
+                </Link>
+            </Row>
+        </Container>
     )
 }

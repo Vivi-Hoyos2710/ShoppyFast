@@ -21,17 +21,20 @@ function App() {
   const [searchVar, setSearchVar] = useState(""); //searchvar es el id del producto en la barra de búsqueda
   const [total, setTotal] = useState(0);
   const [infoUser, setInfoUser] = useState(initialForm);
-  const [itemCantidad, setItemCantidad] = useState(0);
+  const [itemCantidad, setItemCantidad] = useState(0); ///Cantidad de productos en carrito [el número que aparece arriba]
 
   //Funciones
   const eliminarItem = (id) => {
 
     
-    console.log("función elimina: ", id);
+    const cantidadDeProductoAEliminar=carrito.filter((productos) => (productos.item.id == id))[0].quantity;
+    const nuevaCantidad = itemCantidad -cantidadDeProductoAEliminar;
+    if(nuevaCantidad>-1){
+      setItemCantidad(nuevaCantidad);
+    }
     if (window.confirm("¿Seguro quieres eliminar este producto del carrito?")) {
       const nuevoCarrito = carrito.filter((elemento) => elemento.item.id != id);
       setCarrito(nuevoCarrito);
-      console.log(carrito);
     }
     
 
@@ -64,7 +67,6 @@ function App() {
       setCarrito([...carrito, { item, quantity }]);
     }
   }
-  console.log(carrito);
 
   return (
     <div className="App">

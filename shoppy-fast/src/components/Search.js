@@ -4,7 +4,6 @@ import { FormGroup,Input,Label,Button, Container,Col,Row,Badge} from "reactstrap
 import { BsFillCartFill } from "react-icons/bs";
 const SearchBar = ({searchVar,setSearchVar,cantidad}) => {
     const busqueda=(entrada)=>{
-        console.log(searchVar);
         setSearchVar(entrada);
     }
     return (

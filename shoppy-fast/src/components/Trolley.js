@@ -15,7 +15,6 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
         calculo()
     }
         , [carrito]);
-    console.log(total);
     ///
    
     return (<>
@@ -72,7 +71,7 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
                         </tr>
                     </thead>
                     {carrito.map(elemento => (
-                        <tbody>
+                        <tbody key={"body"+elemento.item.id}>
                             <tr>
                                 <th scope="row">
                                     <img src={elemento.item.imgURL} alt="img" width="100px" />
@@ -81,7 +80,7 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
                                     <span>{elemento.item.name}</span>
                                 </td>
                                 <td>
-                                    <Row>
+                                    <Row key={elemento.item.id}>
                                         <Col>
                                             <Button color="success" size="sm" onClick={()=>agregarProducto(elemento.item,1)}>+
                                             </Button>
@@ -109,7 +108,7 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
                                 </td>
                                 <td>
                                     
-                                <Button color="danger" size="sm" onClick={() => eliminarItem(elemento.item.id)}>Eliminar
+                                <Button color="danger" size="sm" onClick={() => eliminarItem(elemento.item.id)}><BsTrash/>
                                             </Button>   
                                     
 
