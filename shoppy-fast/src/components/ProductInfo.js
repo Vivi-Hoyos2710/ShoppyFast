@@ -4,15 +4,12 @@ import { useParams } from 'react-router-dom'
 import productsList from "../util/db/products";
 import { getProduct } from '../Services/ProductInfoServices'; //No borrar
 
-const ProductInfo = ({ setCarrito, carrito }) => {
+const ProductInfo = ({ setCarrito, carrito,agregarProducto }) => {
     const { id } = useParams();
-    const [productInfo, setProductInfo] = useState({
-        id: "00",
-        name: "NO DATA",
-        price: "0",
-        img: "https://www.freeiconspng.com/thumbs/error-icon/sign-red-error-icon-1.png",
-        amount: 0,
-    });
+    const [load, setLoad] = useState(false);
+    const [productInfo, setProductInfo] = useState({});
+    const [dato, hayDatos] = useState(false);
+
     //console.log(productsList.filter((item) => (item.id == id))); //prueba
     // const data = productInfo;
     // useEffect(() => {
@@ -25,63 +22,78 @@ const ProductInfo = ({ setCarrito, carrito }) => {
     //     conseguirDatos();
     // }, [id])
     useEffect(() => {
+        hayDatos(false);
         const conseguirDatos = async () => {
+            setLoad(true);
             const data = await getProduct(id);
-            console.log(data);
             if (data) {
                 setProductInfo(data[0]);
+                setLoad(false);
+                if (data.length == 1) {
+                    hayDatos(true);
+                    
+                }
             }
         };
         conseguirDatos();
     }, [id]);
-const carga= (evento)=>{
-    <>
-    <Spinner
-    color="primary"
-    type="grow">
-    Loading...
-  </Spinner>
-  <br/>
-  <Spinner
-    color="primary"
-    type="grow"
-  >
-    Loading...
-  </Spinner>
-  </>
-}
+    const carga = () => {
+        <>
+            <Spinner
+                color="primary"
+                type="grow">
+                Loading...
+            </Spinner>
+            <br />
+            <Spinner
+                color="primary"
+                type="grow"
+            >
+                Loading...
+            </Spinner>
+        </>
+    };
+    
     return (
         <div className='containerFluid' >
             <Container className='lg-6'>
-                {productInfo ? (<>
-                    <Container onLoad={carga}>
-                        <Card className='my-2'color="danger" outline style={{ width: '30rem' }}>
-                            <CardHeader tag="h3">{productInfo.name}</CardHeader>
-                            <CardBody>
-                                <Row>
-                                    <Col Col sm="12" md={{ size: 8, offset: 2 }}>
-                                        <img src={productInfo.imgURL} alt="img" width="100%" />
-                                    </Col>
-                                    <Col>
-                                        <CardText>
-                                            <div><b>Price:</b>
-                                            {productInfo.price}</div>
-                                            <div><b>Brand:</b>
-                                            {productInfo.marca}</div>
-                                            <div><b>Features:</b>
-                                            <p>"{productInfo.description}"</p></div>
-                                            <br/>
-                                        </CardText>
-                                    </Col>
-                                <Col Col sm="12" md={{ size: 8, offset: 2 }}>
-                                <Button color="danger" onClick={() => setCarrito([...carrito, productInfo])}>Add to Cart</Button>
-                                </Col>
-                                </Row>
-                            </CardBody>
-                        </Card>
-                    </Container>
+                {load == false ? (<>
+                    {
+                        dato && productInfo.id? (
+                            <>
+                                <Container onLoad={carga}>
+                                    <Card className='my-2' color="danger" outline style={{ width: '30rem' }}>
+                                        <CardHeader tag="h3">{productInfo.name}</CardHeader>
+                                        <CardBody>
+                                            <Row>
+                                                <Col sm={{ size: 3, offset: 3 }} md={{ size: 6, offset: 3 }}>
+                                                    <img src={productInfo.imgURL} alt="img" width="100%" />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
 
-                </>) : "No se reconoce id de producto"
+                                                    <div><b>Precio:</b>
+                                                        {productInfo.price}</div>
+                                                    <div><b>Marca:</b>
+                                                        {productInfo.marca}</div>
+                                                    <div><b>Descripción:</b>
+                                                        "{productInfo.description}"</div>
+                                                    <br />
+
+                                                </Col>
+                                                <Col sm="12" md={{ size: 8, offset: 2 }}>
+                                                    <Button color="danger" onClick={()=>agregarProducto(productInfo,1)}>Add to Cart</Button>
+                                                </Col>
+                                            </Row>
+                                        </CardBody>
+                                    </Card>
+                                </Container>
+                            </>) : "El código no corresponde a ningún producto, por favor ingrese otro."
+                    }
+
+
+                </>) : (<><Spinner color="primary" type="grow">Loading...</Spinner><br /><Spinner color="primary" type="grow">Loading...</Spinner></>)
                 }
 
 
@@ -89,7 +101,7 @@ const carga= (evento)=>{
 
 
 
-        </div>
+        </div >
     )
 }
 export default ProductInfo

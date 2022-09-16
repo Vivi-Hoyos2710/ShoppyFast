@@ -20,26 +20,72 @@ function App() {
   const [carrito, setCarrito] = useState([]);
   const [searchVar, setSearchVar] = useState(""); //searchvar es el id del producto en la barra de búsqueda
   const [total, setTotal] = useState(0);
-  const cantidadCarrito=carrito.length;
-  const [infoUser,setInfoUser]=useState(initialForm);
-  
-    return (
-      <div className="App">
-        <BrowserRouter>
-          <Header/>
-          <Routes>
-            <Route path='/' element={<SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={cantidadCarrito}/>}/>
-            <Route path='carrito' element={<Trolley total={total} setTotal={setTotal} carrito={carrito} setCarrito={setCarrito} />} />
-            <Route path='/producto/:id' element={<div><SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={cantidadCarrito}/><ProductInfo setCarrito={setCarrito} carrito={carrito} /></div>} />
-            <Route path='userInfo' element={<UserForm setInfoUser={setInfoUser} infoUsuario={infoUser}/>} />
-            <Route path='factura' element={<Bill infoUser={infoUser} carrito={carrito} total={total}/>}/>
-          </Routes>
-        </BrowserRouter>
-      </div>
+  const [infoUser, setInfoUser] = useState(initialForm);
+  const [itemCantidad, setItemCantidad] = useState(0);
+
+  //Funciones
+  const eliminarItem = (id) => {
+
+    
+    console.log("función elimina: ", id);
+    if (window.confirm("¿Seguro quieres eliminar este producto del carrito?")) {
+      const nuevoCarrito = carrito.filter((elemento) => elemento.item.id != id);
+      setCarrito(nuevoCarrito);
+      console.log(carrito);
+    }
+    
+
+  };
 
 
+  const agregarProducto = (item, quantity) => {
+    const nuevaCantidad = itemCantidad + quantity;
+    setItemCantidad(nuevaCantidad);
+    const existingItem = carrito.find(el => el.item.id === item.id);
+    if (existingItem) {
+      carrito.forEach((el) => {
+        if (el.quantity == 1 && quantity==-1) {
+          eliminarItem(el.item.id);
+        }
+      });
+      setCarrito(carrito.map((el) => {
 
-    );
+        if (el.item.id === item.id && el.quantity > 0) {
+          return {
+            item: {
+              ...el.item
+            },
+            quantity: el.quantity + quantity,
+          };
+        }
+
+        return el;
+      }))
+    }
+
+    else {
+      setCarrito([...carrito, { item, quantity }]);
+    }
   }
+  console.log(carrito);
 
-  export default App;
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path='/' element={<SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={itemCantidad} />} />
+          <Route path='carrito' element={<Trolley eliminarItem={eliminarItem} agregarProducto={agregarProducto} total={total} setTotal={setTotal} carrito={carrito} setCarrito={setCarrito} />} />
+          <Route path='/producto/:id' element={<div><SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={itemCantidad} /><ProductInfo agregarProducto={agregarProducto} setCarrito={setCarrito} carrito={carrito} /></div>} />
+          <Route path='userInfo' element={<UserForm setInfoUser={setInfoUser} infoUsuario={infoUser} />} />
+          <Route path='factura' element={<Bill infoUser={infoUser} carrito={carrito} total={total} />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+
+
+
+  );
+}
+
+export default App;

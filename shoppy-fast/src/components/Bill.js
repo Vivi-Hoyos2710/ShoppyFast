@@ -35,8 +35,8 @@ export const Bill = ({ infoUser, carrito,total }) => {
                     {carrito.map(producto => (
                     <ListGroupItem>
                     <Row>
-                    <Col xs="6">{producto.name}</Col>
-                    <Col xs="6">{producto.price}</Col>
+                    <Col xs="6">{producto.item.name}</Col>
+                    <Col xs="6">{producto.item.price}</Col>
                     </Row>
                     
                     </ListGroupItem>))

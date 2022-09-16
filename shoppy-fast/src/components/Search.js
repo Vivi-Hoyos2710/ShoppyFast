@@ -37,7 +37,7 @@ const SearchBar = ({searchVar,setSearchVar,cantidad}) => {
             </FormGroup>
             <Container className="">
             <Link to={`/producto/${searchVar}`}>
-                <Button color="danger" >Buscar</Button>
+                <Button color="danger">Buscar</Button>
             </Link>
             
             </Container>

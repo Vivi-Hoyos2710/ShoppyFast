@@ -1,77 +1,127 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import {Container,Table,Button} from 'reactstrap';
+import { Container, Table, Button, Row, Col, ListGroupItem, Label, ListGroup } from 'reactstrap';
 import '../Estilos/Style.css';
-import { BsFillCartFill } from "react-icons/bs";
-const Trolley = ({ carrito, setCarrito,total,setTotal}) => {
+import { BsFillCartFill, BsTrash } from "react-icons/bs";
 
-    
+const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setTotal, cantidad, setCantidad }) => {
+
+
 
     useEffect(() => { ///calcular total
         const hola = () => {
-            setTotal(carrito.reduce((obj, cur) => (obj + cur.price), 0))
+            setTotal(carrito.reduce((obj, cur) => (obj + (cur.item.price)*cur.quantity), 0))
         }
         hola()
     }
         , [carrito]);
     console.log(total);
     ///
-    const eliminarItemCarrito = (id) => {
-        const arr = carrito.filter((item) => item.id !== id);
-        setCarrito(arr);
-    };
+   
     return (<>
+
         < Container className='encabezado_carrito' >
-        
-        <Link to="/userInfo">
-            <Button color="primary" >Crear Factura
-            </Button>
-        </Link>
-            <BsFillCartFill/> 
-            <span><b>Total Price of your Cart :</b></span>
-            <span>$ {total}</span>
+            <Row>
+                <Col xs="9" sm="4">
+                    <BsFillCartFill />
+                    <span><b>Precio Total  </b></span>
+                    <span> $ {total}</span>
+                </Col>
+                <Col xs="6" sm="4" style={{ marginTop: '6' }}>
+                    <Link to="/userInfo">
+                        <Button color="primary" >Crear Factura
+                        </Button>
+                    </Link>
+
+                </Col>
+                <Col xs="6" sm="4" style={{ marginTop: '6' }}>
+                    <Link to="/">
+                        <Button color="danger" >Volver
+                        </Button>
+                    </Link>
+
+                </Col>
+            </Row>
         </Container>
+
         <React.Fragment>
             <div className='container_table'>
-        <Table className='tabla_carro'>
-                <thead>
-                    <tr>
-                        <th>
-                        Imagen del producto
-                        </th>
-                        <th>
-                        Nombre Producto
-                        </th>
-                        <th>
-                        Cantidad
-                        </th>
-                        <th>
-                        Precio
-                        </th>
-                    </tr>
-                </thead>
-            {carrito.map(producto => (
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                        <img src={producto.imgURL} alt="img" width="100px" />
-                        </th>
-                        <td>
-                        <span>{producto.name}</span>
-                        </td>
-                        <td>
-                        2
-                        </td>
-                        <td>
-                        <span>{producto.price}</span>
-                        </td>
-                    </tr>
+                <Table className='tabla_carro'>
+                    <thead>
+                        <tr>
+                            <th>
+                                Imagen del producto
+                            </th>
+                            <th>
+                                Nombre Producto
+                            </th>
+                            <th>
+                                Cantidad Producto
+                            </th>
+                            <th>
+                                Precio por producto
+                            </th>
+                            <th>
+                                Precio total producto
+                            </th>
+                            <th>
 
-                </tbody>
-            )
-            )
-            }
-            </Table>
+                            </th>
+                        </tr>
+                    </thead>
+                    {carrito.map(elemento => (
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <img src={elemento.item.imgURL} alt="img" width="100px" />
+                                </th>
+                                <td>
+                                    <span>{elemento.item.name}</span>
+                                </td>
+                                <td>
+                                <Row> 
+                                        <Col >
+                                            <Button color="success" size="sm" onClick={()=>agregarProducto(elemento.item,1)}>+
+                                            </Button>
+                                        </Col>
+
+                                        <Col  >
+                                            <ListGroup >
+                                                <ListGroupItem>
+                                                    <Label>
+                                                        {elemento.quantity}
+                                                    </Label>
+                                                </ListGroupItem>
+                                            </ListGroup >
+                                        </Col>
+                                        <Col >
+                                            <Button color="danger" size="sm" onClick={()=>agregarProducto(elemento.item,-1)}>-
+                                            </Button>
+                                        </Col>
+                                    </Row> 
+
+                                    
+                                </td>
+                                <td>
+                                    <span>{(elemento.item.price)}</span>
+                                </td>
+                                <td>
+                                    <span>{(elemento.item.price*elemento.quantity)}</span>
+                                </td>
+                                <td>
+                                    
+                                <Button color="danger" size="sm" onClick={() => eliminarItem(elemento.item.id)}>Eliminar
+                                            </Button>   
+                                    
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    )
+                    )
+                    }
+                </Table>
             </div>
 
         </React.Fragment ></>)
@@ -79,4 +129,3 @@ const Trolley = ({ carrito, setCarrito,total,setTotal}) => {
 
 
 export default Trolley
-

@@ -15,6 +15,9 @@ const UserForm = ({setInfoUser,infoUsuario}) => {
             number: event.target[3].value,
             email: event.target[4].value,
         };
+        const esquema= await userSchema.validate(formData).catch((err) => {
+            console.log(err.errors);
+          });
         const isValid = await userSchema.isValid(formData);
         console.log(isValid);
         if (isValid) {
