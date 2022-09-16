@@ -40,14 +40,11 @@ function App() {
 
   const agregarProducto = (item, quantity) => {
     const nuevaCantidad = itemCantidad + quantity;
-    setItemCantidad(nuevaCantidad);
+    if(nuevaCantidad>-1){
+      setItemCantidad(nuevaCantidad);
+    }
     const existingItem = carrito.find(el => el.item.id === item.id);
     if (existingItem) {
-      carrito.forEach((el) => {
-        if (el.quantity == 1 && quantity==-1) {
-          eliminarItem(el.item.id);
-        }
-      });
       setCarrito(carrito.map((el) => {
 
         if (el.item.id === item.id && el.quantity > 0) {

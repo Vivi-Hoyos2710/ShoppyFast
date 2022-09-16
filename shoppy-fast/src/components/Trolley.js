@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { Container, Table, Button, Row, Col, ListGroupItem, Label, ListGroup } from 'reactstrap';
+import { Container, Table, Button, Row, Col, ListGroupItem, Label, ListGroup,Badge } from 'reactstrap';
 import '../Estilos/Style.css';
 import { BsFillCartFill, BsTrash } from "react-icons/bs";
 
@@ -9,10 +9,10 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
 
 
     useEffect(() => { ///calcular total
-        const hola = () => {
+        const calculo = () => {
             setTotal(carrito.reduce((obj, cur) => (obj + (cur.item.price)*cur.quantity), 0))
         }
-        hola()
+        calculo()
     }
         , [carrito]);
     console.log(total);
@@ -25,7 +25,8 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
                 <Col xs="9" sm="4">
                     <BsFillCartFill />
                     <span><b>Precio Total  </b></span>
-                    <span> $ {total}</span>
+                    <Badge color="dark"
+                    pill> $ {total} </Badge>
                 </Col>
                 <Col xs="6" sm="4" style={{ marginTop: '6' }}>
                     <Link to="/userInfo">
@@ -56,7 +57,8 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
                                 Nombre Producto
                             </th>
                             <th>
-                                Cantidad Producto
+                            
+                            <span> Cantidad </span> <span>de</span> <span>Productos </span>
                             </th>
                             <th>
                                 Precio por producto
@@ -79,28 +81,25 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
                                     <span>{elemento.item.name}</span>
                                 </td>
                                 <td>
-                                <Row> 
-                                        <Col >
+                                    <Row>
+                                        <Col>
                                             <Button color="success" size="sm" onClick={()=>agregarProducto(elemento.item,1)}>+
                                             </Button>
                                         </Col>
-
-                                        <Col  >
-                                            <ListGroup >
-                                                <ListGroupItem>
-                                                    <Label>
+                                        <Col>
+                                        <Badge>
+                                                
                                                         {elemento.quantity}
-                                                    </Label>
-                                                </ListGroupItem>
-                                            </ListGroup >
+                                                
+                                        </Badge>       
                                         </Col>
-                                        <Col >
+                                        <Col>
                                             <Button color="danger" size="sm" onClick={()=>agregarProducto(elemento.item,-1)}>-
                                             </Button>
                                         </Col>
-                                    </Row> 
 
-                                    
+                                    </Row>     
+                                            
                                 </td>
                                 <td>
                                     <span>{(elemento.item.price)}</span>

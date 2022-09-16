@@ -5,3 +5,10 @@ export async function getProduct(id) {
     );
     return response.data;
 }
+export async function crearFactura(data) {
+    const response=await axios.post(
+        'https://shoppy-fast.herokuapp.com/api/f/calcularIva',
+        data
+    );
+    return response.data;
+}

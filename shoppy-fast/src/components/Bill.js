@@ -1,9 +1,16 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { Card, CardFooter, CardHeader, ListGroup,ListGroupItem,Col,Row } from 'reactstrap'
-
+import {crearFactura}from '../Services/ProductInfoServices'
 export const Bill = ({ infoUser, carrito,total }) => {
-    console.log(infoUser);
-    const iva=0.05;
+    const [iva,setIva]= useState({});
+    useEffect(async ()=>{
+        const datos= await crearFactura({
+            "products" : carrito
+        });
+        setIva(datos);
+    },[]);
+    console.log(iva);
+    //console.log(infoUser);
     return (
         <div>
             <Card
@@ -49,7 +56,7 @@ export const Bill = ({ infoUser, carrito,total }) => {
                     </ListGroupItem>
                     <ListGroupItem>
                     <Row>
-                    <Col xs="6">IVA {iva*100}%</Col>
+                    <Col xs="6">IVA 19%</Col>
                     <Col xs="6">{total*(iva)}</Col>
                     </Row>
                     </ListGroupItem>
