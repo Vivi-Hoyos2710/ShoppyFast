@@ -5,6 +5,7 @@ import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { inicioSesion } from "../../Services/AdminServices";
 import '../../Estilos/Style.css';
+import { BsFillEyeFill} from "react-icons/bs";
 
 const Login = () => {
     const [hayError,setHayerror]=useState(false);
@@ -81,8 +82,7 @@ const Login = () => {
                         </Label>
                         
                     </Col>
-                </Row>
-                <button style={{borderRadius: "10px",height: "30px",width: "120px",marginLeft:"250px"}}onClick={togglePassword}>Ver contraseña</button>
+                </Row>  
                 <Row>
                     <Col xs="6">
                         <Col xs="3">
@@ -94,6 +94,7 @@ const Login = () => {
                     </Col>
                 </Row>
             </Form>
+            <button style={{borderRadius: "10px",height: "30px",width: "30px",marginLeft:"10px",marginTop:"30px"}}onClick={togglePassword}><BsFillEyeFill/></button>
         </Container>
     );
 };

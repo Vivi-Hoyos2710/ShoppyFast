@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Container, Table, Button, Row, Col, ListGroupItem, Label, ListGroup,Badge } from 'reactstrap';
 import '../../Estilos/Style.css';
-import { BsTrash,BsFillPencilFill } from "react-icons/bs";
+import { BsTrash,BsFillPencilFill,AiFillEyeInvisible } from "react-icons/bs";
 import { cerrarSesion } from '../../Services/AdminServices';
 const Inventario = () => {
 

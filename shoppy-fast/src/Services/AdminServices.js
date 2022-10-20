@@ -27,14 +27,15 @@ export async function inicioSesion(email, password) {
 
     } catch (error) {
         console.log("Entra aquí y debe devolver esto")
-        alert("Contraseña o correo inválidos: "+error.response.data.message);
+        alert("El usuario y contraseña ingresados son incorrectos por favor ingrese otro: "+error.response.data.message);
         return error.response.data
     }
 }
 export async function crearProducto(datosProducto) {
     try {
         const headers=conseguirConfiguracionDeAutenticacion();
-        await axios.post('https://shoppy-fast.herokuapp.com/api/products',datosProducto,headers);
+        const response = await axios.post('https://shoppy-fast.herokuapp.com/api/products',datosProducto,headers);
+        return response
         
     } catch (error) {
         console.log("Error",error);
