@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Card, CardBody, Spinner, Button, CardText, CardHeader, Row, Col, } from 'reactstrap'
 import { useParams } from 'react-router-dom'
-import productsList from "../util/db/products";
-import { getProduct } from '../Services/ProductInfoServices'; //No borrar
+import productsList from "../../util/db/products";
+import { getProduct } from '../../Services/ProductInfoServices'; //No borrar
 
 const ProductInfo = ({ setCarrito, carrito,agregarProducto }) => {
     const { id } = useParams();
     const [load, setLoad] = useState(false);
     const [productInfo, setProductInfo] = useState({});
     const [dato, hayDatos] = useState(false);
-
-    // const data = productInfo;
-    // useEffect(() => {
-    //     const data = productsList.filter((item) => (item.id == id))[0];//ESTO se cambiará con la bdd
-    //     const conseguirDatos = async () => {
-    //         if (data) {
-    //             setProductInfo(data);
-    //         }
-    //     };
-    //     conseguirDatos();
-    // }, [id])
+    //
     useEffect(() => {
         hayDatos(false);
         const conseguirDatos = async () => {

@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import { Link } from "react-router-dom";
 import { Button,Card, CardFooter, CardHeader, ListGroup,ListGroupItem,Col,Row ,Container} from 'reactstrap'
-import {crearFactura}from '../Services/ProductInfoServices'
+import { crearFactura } from '../../Services/ProductInfoServices';
 export const Bill = ({ infoUser, carrito,total }) => {
     const [facturaIva,setFacturaIva]= useState({});
     useEffect(()=>{
@@ -12,7 +12,7 @@ export const Bill = ({ infoUser, carrito,total }) => {
             setFacturaIva(datos);
         }
         enviarDatos();
-    },[]);
+    });
     const ivaAbs= facturaIva.ivaTotal;
     const totalConIva= facturaIva.precioTotal;
     return (

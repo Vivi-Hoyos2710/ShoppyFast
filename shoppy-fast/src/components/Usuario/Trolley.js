@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Container, Table, Button, Row, Col, ListGroupItem, Label, ListGroup,Badge } from 'reactstrap';
-import '../Estilos/Style.css';
+import '../../Estilos/Style.css';
 import { BsFillCartFill, BsTrash } from "react-icons/bs";
 
 const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setTotal, cantidad, setCantidad }) => {
@@ -81,10 +81,11 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
                                 </td>
                                 <td>
                                     <Row key={elemento.item.id}>
-                                        <Col>
-                                            <Button color="success" size="sm" onClick={()=>agregarProducto(elemento.item,1)}>+
+                                    <Col>
+                                            <Button color="danger" size="sm" onClick={()=>agregarProducto(elemento.item,-1)}>-
                                             </Button>
                                         </Col>
+                                       
                                         <Col>
                                         <Badge>
                                                 
@@ -93,9 +94,10 @@ const Trolley = ({ eliminarItem,agregarProducto,carrito, setCarrito, total, setT
                                         </Badge>       
                                         </Col>
                                         <Col>
-                                            <Button color="danger" size="sm" onClick={()=>agregarProducto(elemento.item,-1)}>-
+                                            <Button color="success" size="sm" onClick={()=>agregarProducto(elemento.item,1)}>+
                                             </Button>
                                         </Col>
+                                     
 
                                     </Row>     
                                             

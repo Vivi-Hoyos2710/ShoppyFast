@@ -17,6 +17,14 @@
     color:black
 
 }
+.encabezado_inventario{
+    font-size:19px; 
+    margin:30px;
+    display: flex;
+    justify-content: space-between;
+    color:black
+
+}
 
 b{
 margin:10px;

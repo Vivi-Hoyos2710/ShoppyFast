@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
-    Input,
     FormGroup,
     Label,
     Form,
@@ -29,7 +28,6 @@ const UserForm = ({ setInfoUser, infoUsuario }) => {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(userSchema),
