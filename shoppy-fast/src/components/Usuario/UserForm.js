@@ -9,8 +9,8 @@ const UserForm = ({ setInfoUser, infoUsuario }) => {
     const userSchema = yup.object().shape({
         name: yup.string().required("Campo de nombre vacio"),
         surname: yup.string().required("Campo de apellido vacio"),
-        document:yup.number("Debe ser un valor numerico").typeError("Campo de cédula vacio").max(15,"La cedula no puede ser mayor a 15 caracteres").positive("No puede ser un número negativo").integer("Debe ser entero"),
-        number: yup.number("Debe ser un valor numerico").typeError("Campo de cantidad del producto vacio").max(15,"El número no puede ser mayor a 15 caracteres").positive("No puede ser un número negativo").integer("Debe ser entero"),
+        document:yup.number("Debe ser un valor numerico").typeError("Campo de cédula vacio").positive("No puede ser un número negativo").integer("Debe ser entero"),
+        number: yup.number("Debe ser un valor numerico").typeError("Campo de cantidad del producto vacio").positive("No puede ser un número negativo").integer("Debe ser entero"),
         email: yup.string().email("No es un email valido").required("Campo de email vacio"),
         check:yup.bool(),
     });
