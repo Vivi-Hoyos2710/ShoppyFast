@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Container, Table, Button } from 'reactstrap';
 import '../../Estilos/Style.css';
-import { BsTrash, BsFillPencilFill, BsFillChatRightTextFill } from "react-icons/bs";
+import { BsTrash, BsFillPencilFill } from "react-icons/bs";
 import { cerrarSesion } from '../../Services/AdminServices';
 import { getAllProduct } from '../../Services/ProductInfoServices';
 const Inventario = () => {
@@ -57,7 +57,7 @@ const Inventario = () => {
                                 <span>{elemento.id}</span>
 
                             </td>
-                            <td scope="row">
+                            <td >
                                 <img src={elemento.imgURL} alt="img" width="100px" />
                             </td>
                             <td>

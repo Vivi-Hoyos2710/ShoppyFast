@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import {FormGroup, Label, Form, Container, Row, Col, Button, } from "reactstrap";
 import * as yup from "yup";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { inicioSesion } from "../../Services/AdminServices";
 import '../../Estilos/Style.css';
 import { BsFillEyeFill} from "react-icons/bs";
 
 const Login = () => {
-    const [hayError,setHayerror]=useState(false);
     
     const [passwordShown, setPasswordShown] = useState(false);
     const userSchema = yup.object().shape({

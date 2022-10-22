@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 import { Alert, FormGroup, Label, Form, Container, Row, Col, Button } from "reactstrap";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -183,7 +183,7 @@ const CrearProducto = () => {
                     </Col>
                 </Row>
                 <Row>
-                    {error != "" ? <Alert color="danger">{"Error: " + error}</Alert> : ""}
+                    {error !== "" ? <Alert color="danger">{"Error: " + error}</Alert> : ""}
                 </Row>
                 <Row style={{ margin: "25px" }}>
                     <Col>

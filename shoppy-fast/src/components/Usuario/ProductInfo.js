@@ -16,7 +16,7 @@ const ProductInfo = ({carrito,setCarrito,agregarProducto}) => {
             if (data) {
                 setProductInfo(data[0]);
                 setLoad(false);
-                if (data.length == 1) {
+                if (data.length === 1) {
                     hayDatos(true);
                     
                 }

@@ -34,7 +34,7 @@ export async function inicioSesion(email, password) {
 export async function crearProducto(datosProducto) {
     try {
         const headers=conseguirConfiguracionDeAutenticacion();
-        const response = await axios.post('https://shoppy-fast.herokuapp.com/api/products',datosProducto,headers);
+        await axios.post('https://shoppy-fast.herokuapp.com/api/products',datosProducto,headers);
         window.location.href = '/inventario';
     } catch (error) {
         return error.response.data.msg
