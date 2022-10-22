@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, CardBody, Spinner, Button, CardText, CardHeader, Row, Col, } from 'reactstrap'
+import { Container, Card, CardBody, Spinner, Button, CardHeader, Row, Col, } from 'reactstrap'
 import { useParams } from 'react-router-dom'
-import productsList from "../../util/db/products";
 import { getProduct } from '../../Services/ProductInfoServices'; //No borrar
-
-const ProductInfo = ({ setCarrito, carrito,agregarProducto }) => {
+const ProductInfo = ({carrito,setCarrito,agregarProducto}) => {
     const { id } = useParams();
     const [load, setLoad] = useState(false);
     const [productInfo, setProductInfo] = useState({});
@@ -46,12 +44,12 @@ const ProductInfo = ({ setCarrito, carrito,agregarProducto }) => {
     return (
         <div className='containerFluid' >
             <Container className='lg-6'>
-                {load == false ? (<>
+                {load === false ? (<>
                     {
-                        dato && productInfo.id? (
+                        dato && id? (
                             <>
                                 <Container onLoad={carga}>
-                                    <Card className='my-2' color="danger" outline style={{ width: '30rem' }}>
+                                    <Card className='my-2' color="danger" outline style={{ width: '50%' }}>
                                         <CardHeader tag="h3">{productInfo.name}</CardHeader>
                                         <CardBody>
                                             <Row>
@@ -72,7 +70,7 @@ const ProductInfo = ({ setCarrito, carrito,agregarProducto }) => {
 
                                                 </Col>
                                                 <Col sm="12" md={{ size: 8, offset: 2 }}>
-                                                    <Button color="danger" onClick={()=>agregarProducto(productInfo,1)}>Add to Cart</Button>
+                                                    <Button color="danger" onClick={()=>setCarrito(agregarProducto(productInfo,1,carrito))}>Add to Cart</Button>
                                                 </Col>
                                             </Row>
                                         </CardBody>

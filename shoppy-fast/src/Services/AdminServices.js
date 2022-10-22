@@ -21,12 +21,12 @@ export async function inicioSesion(email, password) {
             'https://shoppy-fast.herokuapp.com/api/admin/signin', datos
 
         )
-        console.log(response);
+        
         localStorage.setItem('tokenAdmin', response.data.token);
         window.location.href = '/inventario';
 
     } catch (error) {
-        console.log("Entra aquí y debe devolver esto")
+        console.log("Error",error);
         alert("El usuario y contraseña ingresados son incorrectos por favor ingrese otro: "+error.response.data.message);
         return error.response.data
     }
@@ -35,10 +35,8 @@ export async function crearProducto(datosProducto) {
     try {
         const headers=conseguirConfiguracionDeAutenticacion();
         const response = await axios.post('https://shoppy-fast.herokuapp.com/api/products',datosProducto,headers);
-        return response
-        
+        window.location.href = '/inventario';
     } catch (error) {
-        console.log("Error",error);
-        return error
+        return error.response.data.msg
     }
 }

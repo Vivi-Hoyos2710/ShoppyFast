@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {Input,FormGroup,Label,Form,Container,Row,Col,Button} from "reactstrap";
+import { Alert, FormGroup, Label, Form, Container, Row, Col, Button } from "reactstrap";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { crearProducto } from "../../Services/AdminServices";
 
-const  CrearProducto = () => {
+const CrearProducto = () => {
+    const [error, setError] = useState("");
+
+    //validaciones de yup
     const userSchema = yup.object().shape({
-        id:yup.string().required("Campo de id vacio"),
-        name:yup.string().max(100).required("Campo de nombre vacio"),
-        marca:yup.string().max(100).required("Campo de marca vacio"),
-        description: yup.string().required("Campo de descripción vacio vacio"),
-        price:yup.string().required("Campo de precio vacio"),
-        imgURL:yup.string().required("Campo de url de imagen vacio"),
-        cantidad:yup.string().required("Campo de cantidad del producto vacio"),
+        id: yup.number("Debe ser un valor numérico").typeError('Está vacio, aquí debe ir un valor numérico para el id').positive("No puede ser un número negativo").integer("Debe ser entero"),
+        name: yup.string().max(100).required("Campo de nombre vacio"),
+        marca: yup.string().max(100).required("Campo de marca vacio"),
+        description: yup.string().required("Campo de descripción vacio"),
+        price: yup.number("Debe ser un valor numérico").typeError("Campo de precio vacio").positive("No puede ser un número negativo").integer("Debe ser entero"),
+        imgURL: yup.string().required("Campo de url de imagen vacio"),
+        cantidad: yup.number("Debe ser un valor numérico").typeError("Campo de cantidad del producto vacio").positive("No puede ser un número negativo").integer("Debe ser entero"),
     });
 
-    
+
 
     const {
         register,
@@ -28,27 +31,27 @@ const  CrearProducto = () => {
         resolver: yupResolver(userSchema),
     });
 
-    const navigate = useNavigate();
+
 
     const crearProduct = (data) => {
-        const DatosProducto={
-            id:data.id,
-            name:data.name,
-            marca:data.marca,
-            description:data.description,
-            price:data.price,
-            imgURL:data.imgURL,
-            cantidad:data.cantidad,   
+        const DatosProducto = {
+            id: data.id,
+            name: data.name,
+            marca: data.marca,
+            description: data.description,
+            price: data.price,
+            imgURL: data.imgURL,
+            cantidad: data.cantidad,
         }
-        const enviarProducto= async () =>{
+        const enviarProducto = async () => {
             const datos = await crearProducto(DatosProducto);
-            console.log(DatosProducto);
-            console.log("funciono",datos);
-            navigate("/inventario");
+            if (datos) {
+                setError(datos);
+            }
         }
         enviarProducto();
-        
-        
+
+
     };
     const styleObj = {
         width: "80%",
@@ -58,7 +61,7 @@ const  CrearProducto = () => {
     };
 
     return (
-        <Container style={{ marginTop: "70px" }}>
+        <Container style={{marginTop: '70px',marginLeft:"5%"}}>
             <Form onSubmit={handleSubmit(crearProduct)}>
                 <Row>
                     <Col xs="6">
@@ -98,10 +101,10 @@ const  CrearProducto = () => {
                             <Col xs="3">
                                 <Label>Marca</Label>
                             </Col>
-                            <input 
-                            style={styleObj} 
-                            type="text" 
-                            {...register("marca")}
+                            <input
+                                style={styleObj}
+                                type="text"
+                                {...register("marca")}
                             />
                         </FormGroup>
                         <Label style={{ color: "red" }}>
@@ -114,26 +117,26 @@ const  CrearProducto = () => {
                                 <Label>Descripción</Label>
                             </Col>
                             <input
-                             style={styleObj} 
-                             type="text" 
-                             {...register("description")} 
-                             />
+                                style={styleObj}
+                                type="text"
+                                {...register("description")}
+                            />
                         </FormGroup>
                         <Label style={{ color: "red" }}> {errors["description"] ? errors["description"].message : ""}</Label>
                     </Col>
                 </Row>
-                
+
                 <Row>
                     <Col xs="6">
-                    <FormGroup>
+                        <FormGroup>
                             <Col xs="3">
                                 <Label>Precio</Label>
                             </Col>
-                            <input 
-                            style={styleObj} 
-                            type="number" 
-                            {...register("price")}
-                             />
+                            <input
+                                style={styleObj}
+                                type="number"
+                                {...register("price")}
+                            />
                         </FormGroup>
                         <Label style={{ color: "red" }}>
                             {errors["price"] ? errors["price"].message : ""}
@@ -142,13 +145,13 @@ const  CrearProducto = () => {
                     <Col xs="6">
                         <FormGroup>
                             <Col xs="3">
-                                <Label>Url de la imagen</Label>
+                                <Label>Url imagen</Label>
                             </Col>
                             <input
-                             style={styleObj} 
-                             type="text" 
-                             {...register("imgURL")} 
-                             />
+                                style={styleObj}
+                                type="text"
+                                {...register("imgURL")}
+                            />
                         </FormGroup>
                         <Label style={{ color: "red" }}> {errors["imgURL"] ? errors["imgURL"].message : ""}</Label>
                     </Col>
@@ -156,15 +159,15 @@ const  CrearProducto = () => {
 
                 <Row>
                     <Col xs="6">
-                    <FormGroup>
+                        <FormGroup>
                             <Col xs="3">
                                 <Label>Cantidad</Label>
                             </Col>
-                            <input 
-                            style={styleObj} 
-                            type="number" 
-                            {...register("cantidad")}
-                             />
+                            <input
+                                style={styleObj}
+                                type="number"
+                                {...register("cantidad")}
+                            />
                         </FormGroup>
                         <Label style={{ color: "red" }}>
                             {errors["cantidad"] ? errors["cantidad"].message : ""}
@@ -179,6 +182,9 @@ const  CrearProducto = () => {
                         <Button color="primary" type="submit">Crear Producto</Button>
                     </Col>
                 </Row>
+                <Row>
+                    {error != "" ? <Alert color="danger">{"Error: " + error}</Alert> : ""}
+                </Row>
                 <Row style={{ margin: "25px" }}>
                     <Col>
                         <Link to="/inventario">
@@ -192,6 +198,6 @@ const  CrearProducto = () => {
 };
 
 
-export default CrearProducto ;
+export default CrearProducto;
 
 

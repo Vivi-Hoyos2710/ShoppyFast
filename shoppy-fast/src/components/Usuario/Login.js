@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, FormGroup, Label, Form, Container, Row, Col, Button, } from "reactstrap";
+import {FormGroup, Label, Form, Container, Row, Col, Button, } from "reactstrap";
 import * as yup from "yup";
 import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,11 +9,12 @@ import { BsFillEyeFill} from "react-icons/bs";
 
 const Login = () => {
     const [hayError,setHayerror]=useState(false);
-    const [errores,setErrores]=useState("");
+    
     const [passwordShown, setPasswordShown] = useState(false);
     const userSchema = yup.object().shape({
         email: yup.string().email("No es un email valido").required("Campo de email vacio"),
-        password: yup.string().required("Campo de contraseña vacio"),
+        password: yup.string().required("Campo de contraseña vacio").matches(/^[a-zA-Z0-9@]+$/,"Este campo no puede tener simbolos ni espacios en blanco"
+          ),
     });
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
@@ -26,26 +27,20 @@ const Login = () => {
     const ingresoAdmin = (data) => {
         const loginAsincrono=async()=>{
             const err=await inicioSesion(data.email,data.password);
-            console.log(err);
-            setHayerror(true);
-            setErrores(err.message);
+            
         }
         loginAsincrono();
     };
 
     const styleObj = {
-        width: "80%",
+        width: "100%",
         height: "40px",
         borderRadius: "8px",
         border: "1px solid gray"
     };
 
-    if (hayError) {
-        
-        setHayerror(false);}
-
     return (
-        <Container className='container_table' style={{ marginTop: "70px" }}>
+        <Container style={{marginTop: '70px',marginLeft:"20%"}} >
             <Form onSubmit={handleSubmit(ingresoAdmin)}>
                 <Row>
                     <Col xs="6">
@@ -55,7 +50,7 @@ const Login = () => {
                             </Col>
                             <input
                                 
-                                style={{styleObj,width: "370px",borderRadius: "10px",height: "40px"}}
+                                style={styleObj}
                                 id="emailInput"
                                 name="E-mail"
                                 type="text"
@@ -73,7 +68,7 @@ const Login = () => {
                                 <Label>Contraseña</Label>
                             </Col>
                             <input 
-                            style={{styleObj,width: "370px",borderRadius: "10px",height: "40px"}}
+                            style={styleObj}
                             type={passwordShown ? "text" : "password"}
                              {...register("password")} />
                         </FormGroup>
@@ -83,6 +78,11 @@ const Login = () => {
                         
                     </Col>
                 </Row>  
+                </Form>
+                <Container>
+            <button style={{borderRadius: "10px",height: "30px",width: "70px",marginLeft:"40%"}}onClick={togglePassword}> Ver <BsFillEyeFill/></button>
+            </Container>
+                <Form onSubmit={handleSubmit(ingresoAdmin)}>
                 <Row>
                     <Col xs="6">
                         <Col xs="3">
@@ -93,8 +93,9 @@ const Login = () => {
                         <Button type="submit">Ingresar</Button>
                     </Col>
                 </Row>
-            </Form>
-            <button style={{borderRadius: "10px",height: "30px",width: "30px",marginLeft:"10px",marginTop:"30px"}}onClick={togglePassword}><BsFillEyeFill/></button>
+                </Form>
+
+           
         </Container>
     );
 };
