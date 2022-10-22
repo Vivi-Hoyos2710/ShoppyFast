@@ -9,7 +9,7 @@ const SearchBar = ({ searchVar, setSearchVar, cantidad }) => {
             setSearchVar(entrada);}
     const enviarEntrada = () => {
         console.log(searchVar);
-        if (typeof parseInt(searchVar) === 'number' && searchVar!==null) {
+        if (typeof parseInt(searchVar) === 'number' && searchVar!=="" && searchVar!==null) {
             
             const url="/producto/"+searchVar
             console.log(url);
