@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Trolley from './Trolley';
 import ProductInfo from './ProductInfo';
 import UserForm from './UserForm';
+import IngresarCupon from './IngresarCupon';
 import { Bill } from './Bill';
 import { agregarProducto, eliminarItem } from '../MetodosGlobales/TrolleyActions';
 import Login from './Login';
@@ -21,6 +22,10 @@ function App() {
   const [carrito, setCarrito] = useState([]);
   const [searchVar, setSearchVar] = useState(null); //searchvar es el id del producto en la barra de búsqueda
   const [total, setTotal] = useState(0);
+  const [cupon,setCupon]=useState({
+    "codigo_cupon": "",
+    "descuento": 0,
+});
   const [infoUser, setInfoUser] = useState(initialForm);
   const [itemCantidad, setItemCantidad] = useState(0); ///Cantidad de productos en carrito [el número que aparece arriba]
   useEffect(() => { ///calcular total de cantidades
@@ -35,11 +40,12 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={itemCantidad} />} />
-          <Route path='carrito' element={<Trolley eliminarItem={eliminarItem} agregarProducto={agregarProducto} total={total} setTotal={setTotal} carrito={carrito} setCarrito={setCarrito} />} />
+          <Route path='carrito' element={<Trolley eliminarItem={eliminarItem} agregarProducto={agregarProducto} total={total} setTotal={setTotal} carrito={carrito} setCarrito={setCarrito} cupon={cupon}/>} />
           <Route path='/producto/:id' element={<div><SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={itemCantidad} /><ProductInfo agregarProducto={agregarProducto} setCarrito={setCarrito} carrito={carrito} /></div>} />
           <Route path='userInfo' element={<UserForm setInfoUser={setInfoUser} infoUsuario={infoUser} />} />
-          <Route path='factura' element={<Bill infoUser={infoUser} carrito={carrito} total={total} />} />
+          <Route path='factura' element={<Bill infoUser={infoUser} carrito={carrito} total={total}/>} />
           <Route path='admin' element={<Login />} />
+          <Route path='ingresarcupon' element={<IngresarCupon setCupon={setCupon}/>} />
         </Routes>
       </BrowserRouter>
     </div>

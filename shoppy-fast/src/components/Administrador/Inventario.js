@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { Container, Table, Button } from 'reactstrap';
 import '../../Estilos/Style.css';
 import { BsTrash, BsFillPencilFill } from "react-icons/bs";
-import { cerrarSesion } from '../../Services/AdminServices';
+import { cerrarSesion,deleteProduct } from '../../Services/AdminServices';
 import { getAllProduct } from '../../Services/ProductInfoServices';
+
 const Inventario = () => {
     const [listaProductos, setListaProductos] = useState([]);
     useEffect(() => { ///Trae todos los productos de la bdd
@@ -16,14 +17,19 @@ const Inventario = () => {
     }, []);
     return (<>
         <Container className='encabezado_inventario' >
-                <Link to="/crearproducto">
-                    <Button color="primary" >Crear Producto
-                    </Button>
-                </Link>
-                <Link to="">
-                    <Button onClick={e => { cerrarSesion() }} color="danger">Cerrar Sesión
-                    </Button>
-                </Link>
+            <Link to="/crearproducto">
+                <Button color="primary" >Crear Producto
+                </Button>
+            </Link>
+            <Link to="/crearcupon">
+                <Button color="primary" >Crear Cupon
+                </Button>
+            </Link>
+            
+            <Link to="">
+                <Button onClick={e => { cerrarSesion() }} color="danger">Cerrar Sesión
+                </Button>
+            </Link>
         </Container>
 
         <React.Fragment>
@@ -67,16 +73,18 @@ const Inventario = () => {
                             <td>
                                 {elemento.cantidad}
                             </td>
-                            
-                                        <td> 
-                                        <Button  color="success" ><BsFillPencilFill />
-                                            Editar
-                                        </Button>
-                                        </td>
-                                        <td> 
-                                        <Button  color="danger" ><BsTrash />
-                                            Eliminar
-                                        </Button>
+
+                            <td>
+                                <Link to={`${elemento.id}/editar`}>
+                                    <Button color="success" ><BsFillPencilFill />
+                                        Editar
+                                    </Button>
+                                </Link>
+                            </td>
+                            <td>
+                                <Button color="danger" onClick={()=>{if (window.confirm("¿Seguro quieres eliminar el producto "+ elemento.name+" de manera definitiva de la base de datos?")) {deleteProduct(elemento.id)}}} ><BsTrash />
+                                    Eliminar
+                                </Button>
                             </td>
                         </tr>
 

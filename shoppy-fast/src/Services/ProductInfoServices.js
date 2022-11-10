@@ -25,4 +25,34 @@ export async function enviarFacturaPorCorreo(data) {
     );
     return response.data;
 }
+export async function verificarCupon(cupon) {
+    console.log(cupon);
+    try {
+        
+        const response=await axios.get(
+            `https://shoppy-fast.herokuapp.com/api/coupon/${cupon}`);
 
+        return response;
+        
+    } catch (error) {
+        console.log(error.response.data.msg);
+        return error;
+    }
+    
+}
+export async function aplicarDescuento(precioTotal,descuento) {
+    const data={
+        "precio_total":precioTotal,
+        "descuento":descuento,
+    }
+    try {
+        const response=await axios.post(
+            'https://shoppy-fast.herokuapp.com/api/coupon/aplicarDescuento',data);
+        return response.data;
+        
+    } catch (error) {
+        console.log(error.response.data.msg);
+        return error.response.data.msg;
+    }
+    
+}

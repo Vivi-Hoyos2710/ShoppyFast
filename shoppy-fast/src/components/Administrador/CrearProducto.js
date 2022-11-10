@@ -1,13 +1,37 @@
-import React, { useState } from "react";
-import {Link } from "react-router-dom";
+import React, { useState, useEffect,useRef } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Alert, FormGroup, Label, Form, Container, Row, Col, Button } from "reactstrap";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { crearProducto } from "../../Services/AdminServices";
-
+import { getProduct } from "../../Services/ProductInfoServices";
+import { actualizarProducto } from "../../Services/AdminServices";
 const CrearProducto = () => {
     const [error, setError] = useState("");
+    const [producto, setProducto] = useState({
+        id: null,
+        name: "",
+        marca: "",
+        description: "",
+        price:null,
+        imgURL: "",
+        cantidad:"",
+    });
+    const { id } = useParams();
+    const existente = id ? true : false;
+    ///////
+    useEffect(() => { ///Trae todos los productos de la bdd
+        const obtenerProducto = async () => {
+            const productoId = await getProduct(id);
+            setProducto(productoId[0]);
+        }
+        if (existente) {
+            obtenerProducto();
+        }
+
+
+    }, [id]);
 
     //validaciones de yup
     const userSchema = yup.object().shape({
@@ -21,11 +45,11 @@ const CrearProducto = () => {
     });
 
 
-
     const {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(userSchema),
@@ -49,7 +73,18 @@ const CrearProducto = () => {
                 setError(datos);
             }
         }
-        enviarProducto();
+        const update = async () => {
+            const datos = await actualizarProducto(DatosProducto,id);
+            if (datos) {
+                setError(datos);
+            }
+        }
+        if (existente) {
+            update();
+        }else{
+            enviarProducto();
+        }
+        
 
 
     };
@@ -61,7 +96,7 @@ const CrearProducto = () => {
     };
 
     return (
-        <Container style={{marginTop: '70px',marginLeft:"5%"}}>
+        <Container style={{ marginTop: '70px', marginLeft: "5%" }}>
             <Form onSubmit={handleSubmit(crearProduct)}>
                 <Row>
                     <Col xs="6">
@@ -74,6 +109,7 @@ const CrearProducto = () => {
                                 id="id"
                                 name="id"
                                 type="number"
+                                defaultValue={producto.id}
                                 {...register("id")}
                             />
                         </FormGroup>
@@ -89,6 +125,7 @@ const CrearProducto = () => {
                                 id="name"
                                 name="name"
                                 type="text"
+                                defaultValue={producto.name}
                                 {...register("name")}
                             />
                         </FormGroup>
@@ -104,6 +141,7 @@ const CrearProducto = () => {
                             <input
                                 style={styleObj}
                                 type="text"
+                                defaultValue={producto.marca}
                                 {...register("marca")}
                             />
                         </FormGroup>
@@ -119,6 +157,7 @@ const CrearProducto = () => {
                             <input
                                 style={styleObj}
                                 type="text"
+                                defaultValue={producto.description}
                                 {...register("description")}
                             />
                         </FormGroup>
@@ -135,6 +174,7 @@ const CrearProducto = () => {
                             <input
                                 style={styleObj}
                                 type="number"
+                                defaultValue={producto.price}
                                 {...register("price")}
                             />
                         </FormGroup>
@@ -150,6 +190,7 @@ const CrearProducto = () => {
                             <input
                                 style={styleObj}
                                 type="text"
+                                defaultValue={producto.imgURL}
                                 {...register("imgURL")}
                             />
                         </FormGroup>
@@ -166,6 +207,7 @@ const CrearProducto = () => {
                             <input
                                 style={styleObj}
                                 type="number"
+                                defaultValue={producto.cantidad}
                                 {...register("cantidad")}
                             />
                         </FormGroup>
@@ -179,7 +221,7 @@ const CrearProducto = () => {
                                 <br />
                             </Label>
                         </Col>
-                        <Button color="primary" type="submit">Crear Producto</Button>
+                        <Button color="primary" type="submit">{existente?"Actualizar producto":"Crear Producto"}</Button>
                     </Col>
                 </Row>
                 <Row>
@@ -187,12 +229,14 @@ const CrearProducto = () => {
                 </Row>
                 <Row style={{ margin: "25px" }}>
                     <Col>
+                    
                         <Link to="/inventario">
                             <Button>Volver</Button>
                         </Link>
                     </Col>
                 </Row>
             </Form>
+
         </Container>
     );
 };

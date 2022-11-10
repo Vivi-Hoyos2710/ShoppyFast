@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Table, Button, Row, Col, Badge, Alert } from 'reactstrap';
 import '../../Estilos/Style.css';
 import { BsFillCartFill, BsTrash } from "react-icons/bs";
-
-const Trolley = ({ eliminarItem, agregarProducto, carrito, setCarrito, total, setTotal }) => {
+import { aplicarDescuento } from '../../Services/ProductInfoServices';
+const Trolley = ({ eliminarItem, agregarProducto, carrito, setCarrito, total, setTotal, cupon }) => {
     const [mensaje, setMensaje] = useState("");
+    const [descuento, setDescuentoAplicado] = useState(0);
+    const [totalDcto,setTotalDcto]=useState(0);
     const navigate = useNavigate();
     const facturacion = () => {
         if (carrito.length > 0) {
@@ -25,32 +27,59 @@ const Trolley = ({ eliminarItem, agregarProducto, carrito, setCarrito, total, se
         setMensaje("No hay productos");
     }, [carrito]);
 
+    useEffect(() => {
+        const restarTotal = async () => {
+            const respuesta = await aplicarDescuento(total, cupon.descuento);
+            console.log(respuesta);
+            setDescuentoAplicado(respuesta.descuento_aplicado);
+            setTotalDcto(respuesta.nuevo_precio_total);
+        }
+        if (cupon.descuento !== 0) {
+            restarTotal();
+        }
+    }, [cupon, total]);
+
     return (
         <>
             < Container className='encabezado_carrito'>
-                <Row>
-                    <Col xs="9" sm="4">
-                        <BsFillCartFill />
-                        <span><b>Precio Total  </b></span>
-                        <Badge color="dark"
-                            pill> $ {total} </Badge>
-                    </Col>
-                    <Col xs="6" sm="4" style={{ marginTop: '6' }}>
 
-                        <Button color="primary" onClick={e => {facturacion()}}>Crear Factura
-                        </Button>
-
-
-                    </Col>
-                    <Col xs="6" sm="4" style={{ marginTop: '6' }}>
-                        <Link to="/">
-                            <Button color="danger" >Volver
-                            </Button>
-                        </Link>
-
-                    </Col>
-                </Row>
             </Container>
+            <Container className='encabezado_inventario' >
+
+
+                <Col xs="9" sm="4">
+                    <BsFillCartFill />
+                    <span><b>Precio Total  </b></span>
+                    neto:  
+                    <Badge color="dark"
+                        pill> $ {total} </Badge> <br/>
+                    {cupon.descuento !== 0?<>con descuento:
+                    <Badge color="dark"
+                        pill> $ {totalDcto} </Badge></>:""}
+
+                </Col>
+
+                <Button color="primary" onClick={e => { facturacion() }}>Crear Factura
+                </Button>
+
+
+
+
+                <Link to="/ingresarcupon">
+                    <Button color="primary" >Cupón de descuento
+                    </Button>
+                </Link>
+
+
+
+                <Link to="/">
+                    <Button color="danger" >Volver
+                    </Button>
+                </Link>
+
+
+            </Container>
+
 
             <React.Fragment>
                 <div className='container_table'>
@@ -127,9 +156,15 @@ const Trolley = ({ eliminarItem, agregarProducto, carrito, setCarrito, total, se
                             </tbody>
                         )
                         )
-                        }</>) : <tbody><Alert color="info">{mensaje}</Alert></tbody>}
+                        }<tr>
+                                <td colspan="6">{cupon.descuento !== 0 ? (<Alert color="info">{"Descuento aplicado: $"+descuento}</Alert>) : ""}</td>
+                            </tr>
+                            
+                        </>) : <tr><td colspan="6"><Alert color="info">{mensaje}</Alert></td></tr>}
 
                     </Table>
+
+
                 </div>
 
             </React.Fragment >
