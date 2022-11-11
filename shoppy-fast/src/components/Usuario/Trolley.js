@@ -97,6 +97,10 @@ const Trolley = ({ eliminarItem, agregarProducto, carrito, setCarrito, total, se
                                     <span> Cantidad </span> <span>de</span> <span>Productos </span>
                                 </th>
                                 <th>
+
+                                    <span> Cantidad </span> <span>disponible de</span> <span>Producto</span>
+                                </th>
+                                <th>
                                     Precio por producto
                                 </th>
                                 <th>
@@ -137,6 +141,9 @@ const Trolley = ({ eliminarItem, agregarProducto, carrito, setCarrito, total, se
 
                                         </Row>
 
+                                    </td>
+                                    <td>
+                                    <span>{(elemento.item.cantidad)}</span>
                                     </td>
                                     <td>
                                         <span>{(elemento.item.price)}</span>
