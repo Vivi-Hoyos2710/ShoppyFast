@@ -20,7 +20,7 @@ const initialForm = {
 
 function App() {
   const [carrito, setCarrito] = useState([]);
-  const [searchVar, setSearchVar] = useState(null); //searchvar es el id del producto en la barra de búsqueda
+
   const [total, setTotal] = useState(0);
   const [cupon,setCupon]=useState({
     "codigo_cupon": "",
@@ -39,9 +39,9 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path='/' element={<SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={itemCantidad} />} />
+          <Route path='/' element={<SearchBar cantidad={itemCantidad} />} />
           <Route path='carrito' element={<Trolley eliminarItem={eliminarItem} agregarProducto={agregarProducto} total={total} setTotal={setTotal} carrito={carrito} setCarrito={setCarrito} cupon={cupon}/>} />
-          <Route path='/producto/:id' element={<div><SearchBar searchVar={searchVar} setSearchVar={setSearchVar} cantidad={itemCantidad} /><ProductInfo agregarProducto={agregarProducto} setCarrito={setCarrito} carrito={carrito} /></div>} />
+          <Route path='/producto/:id' element={<div><SearchBar cantidad={itemCantidad} /><ProductInfo agregarProducto={agregarProducto} setCarrito={setCarrito} carrito={carrito} /></div>} />
           <Route path='userInfo' element={<UserForm setInfoUser={setInfoUser} infoUsuario={infoUser} />} />
           <Route path='factura' element={<Bill infoUser={infoUser} carrito={carrito} total={total}/>} />
           <Route path='admin' element={<Login />} />

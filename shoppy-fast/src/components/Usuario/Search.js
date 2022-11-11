@@ -2,19 +2,29 @@ import React from "react"
 import { Link,useNavigate } from "react-router-dom";
 import { FormGroup, Input, Label, Button, Container, Col, Row, Badge } from "reactstrap"
 import { BsFillCartFill } from "react-icons/bs";
-const SearchBar = ({ searchVar, setSearchVar, cantidad }) => {
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+const SearchBar = ({cantidad }) => {
     const navegar=useNavigate();
-    const obtenerEntrada = (entrada) => {
+    const userSchema = yup.object().shape({
+        number: yup.number("Debe ser un valor numerico").typeError("Adelante,ingresa un código válido").positive("No puede ser un número negativo").integer("Debe ser entero"),
         
-            setSearchVar(entrada);}
-    const enviarEntrada = () => {
-        console.log(searchVar);
-        if (typeof parseInt(searchVar) === 'number' && searchVar!=="" && searchVar!==null) {
-            
-            const url="/producto/"+searchVar
-            console.log(url);
-            navegar(url);
-        }
+    });
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(userSchema),
+    });
+
+    
+    const obtenerEntrada = (entrada) => {
+        console.log(entrada);
+        navegar('/producto/'+entrada.number);
+          
     }
     const styleObj = {
         width: "90%",
@@ -36,24 +46,21 @@ const SearchBar = ({ searchVar, setSearchVar, cantidad }) => {
                 </Col>
             </Row>
             <Row xs={11}><h3>Empecemos ingresando el código de tu producto</h3></Row>
-            <form>
+            <form onSubmit={handleSubmit(obtenerEntrada)}>
                 <FormGroup>
-                    <Label for="Search">
-
-                    </Label>
-                    <Input
+                    <input
                         style={styleObj}
                         id="Search"
                         name="search"
                         placeholder="Busca por código"
                         type="number"
-                        onChange={e => obtenerEntrada(e.target.value)}
+                        {...register("number")}
+                        
                     />
-                    <Label></Label>
-
+                     <Label style={{ color: "red" }}> {errors["number"] ? errors["number"].message : ""}</Label>
                 </FormGroup>
-                <Container className="">
-                        <Button color="danger" onClick={() => { enviarEntrada() }}>Buscar</Button>
+                <Container>
+                        <Button color="danger" type="submit">Buscar</Button>
                 </Container>
 
 

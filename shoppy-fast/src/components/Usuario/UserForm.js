@@ -10,7 +10,7 @@ const UserForm = ({ setInfoUser, infoUsuario }) => {
         name: yup.string().required("Campo de nombre vacio"),
         surname: yup.string().required("Campo de apellido vacio"),
         document:yup.number("Debe ser un valor numerico").typeError("Campo de cédula vacio").positive("No puede ser un número negativo").integer("Debe ser entero"),
-        number: yup.number("Debe ser un valor numerico").typeError("Campo de cantidad del producto vacio").positive("No puede ser un número negativo").integer("Debe ser entero"),
+        number: yup.number("Debe ser un valor numerico").typeError("Campo de celular vacío").positive("No puede ser un número negativo").integer("Debe ser entero"),
         email: yup.string().email("No es un email valido").required("Campo de email vacio"),
         check:yup.bool(),
     });

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, CardBody, Spinner, Button, CardHeader, Row, Col, } from 'reactstrap'
+import { Container, Card, CardBody, Spinner, Button, CardHeader, Row, Col,UncontrolledAlert } from 'reactstrap'
 import { useParams } from 'react-router-dom'
 import { getProduct } from '../../Services/ProductInfoServices'; //No borrar
-const ProductInfo = ({carrito,setCarrito,agregarProducto}) => {
+import { FaCat } from "react-icons/fa";
+import { TbError404 } from "react-icons/tb";
+const ProductInfo = ({ carrito, setCarrito, agregarProducto }) => {
     const { id } = useParams();
     const [load, setLoad] = useState(false);
     const [productInfo, setProductInfo] = useState({});
@@ -18,7 +20,7 @@ const ProductInfo = ({carrito,setCarrito,agregarProducto}) => {
                 setLoad(false);
                 if (data.length === 1) {
                     hayDatos(true);
-                    
+
                 }
             }
         };
@@ -40,13 +42,13 @@ const ProductInfo = ({carrito,setCarrito,agregarProducto}) => {
             </Spinner>
         </>
     };
-    
+
     return (
         <div className='containerFluid' >
             <Container className='lg-6'>
                 {load === false ? (<>
                     {
-                        dato && id? (
+                        dato && id ? (
                             <>
                                 <Container onLoad={carga}>
                                     <Card className='my-2' color="danger" outline style={{ width: '50%' }}>
@@ -70,13 +72,13 @@ const ProductInfo = ({carrito,setCarrito,agregarProducto}) => {
 
                                                 </Col>
                                                 <Col sm="12" md={{ size: 8, offset: 2 }}>
-                                                    <Button color="danger" onClick={()=>setCarrito(agregarProducto(productInfo,1,carrito))}>Add to Cart</Button>
+                                                    <Button color="danger" onClick={() => setCarrito(agregarProducto(productInfo, 1, carrito))}>Add to Cart</Button>
                                                 </Col>
                                             </Row>
                                         </CardBody>
                                     </Card>
                                 </Container>
-                            </>) : "El código no corresponde a ningún producto, por favor ingrese otro."
+                            </>) : <UncontrolledAlert color="info">El código no corresponde a ningún producto, por favor ingrese otro. <FaCat/> <TbError404/></UncontrolledAlert>
                     }
 
 

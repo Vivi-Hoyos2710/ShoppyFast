@@ -2,7 +2,7 @@ export function agregarProducto(item, quantity, carrito) {
   const existingItem = carrito.find(el => el.item.id === item.id);
   if (existingItem) {
     const nuevoCarrito = carrito.map((el) => {
-      if (el.item.id === item.id && el.quantity + quantity > 0) {
+      if (el.item.id === item.id && el.quantity + quantity > 0 && el.quantity + quantity <=item.cantidad) {
         return {
           item: {
             ...el.item
@@ -22,5 +22,8 @@ export function agregarProducto(item, quantity, carrito) {
 export function eliminarItem(id, carrito) {
   if (window.confirm("¿Seguro quieres eliminar este producto del carrito?")) {
     return carrito.filter((elemento) => elemento.item.id !== id);
+  }
+  else{
+    return carrito
   }
 };
