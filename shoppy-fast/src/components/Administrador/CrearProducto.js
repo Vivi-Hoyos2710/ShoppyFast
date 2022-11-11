@@ -1,6 +1,15 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Alert, FormGroup, Label, Form, Container, Row, Col, Button } from "reactstrap";
+import {
+    Alert,
+    FormGroup,
+    Label,
+    Form,
+    Container,
+    Row,
+    Col,
+    Button,
+} from "reactstrap";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,36 +23,35 @@ const CrearProducto = () => {
         name: "",
         marca: "",
         description: "",
-        price:null,
+        price: null,
         imgURL: "",
-        cantidad:"",
+        cantidad: "",
     });
     const { id } = useParams();
     const existente = id ? true : false;
-    ///////
-    useEffect(() => { ///Trae todos los productos de la bdd
-        const obtenerProducto = async () => {
-            const productoId = await getProduct(id);
-            setProducto(productoId[0]);
-        }
-        if (existente) {
-            obtenerProducto();
-        }
-
-
-    }, [id]);
 
     //validaciones de yup
     const userSchema = yup.object().shape({
-        id: yup.number("Debe ser un valor numérico").typeError('Está vacio, aquí debe ir un valor numérico para el id').positive("No puede ser un número negativo").integer("Debe ser entero"),
+        id: yup
+            .number("Debe ser un valor numérico")
+            .typeError("Está vacio, aquí debe ir un valor numérico para el id")
+            .positive("No puede ser un número negativo")
+            .integer("Debe ser entero"),
         name: yup.string().max(100).required("Campo de nombre vacio"),
         marca: yup.string().max(100).required("Campo de marca vacio"),
         description: yup.string().required("Campo de descripción vacio"),
-        price: yup.number("Debe ser un valor numérico").typeError("Campo de precio vacio").positive("No puede ser un número negativo").integer("Debe ser entero"),
+        price: yup
+            .number("Debe ser un valor numérico")
+            .typeError("Campo de precio vacio")
+            .positive("No puede ser un número negativo")
+            .integer("Debe ser entero"),
         imgURL: yup.string().required("Campo de url de imagen vacio"),
-        cantidad: yup.number("Debe ser un valor numérico").typeError("Campo de cantidad del producto vacio").positive("No puede ser un número negativo").integer("Debe ser entero"),
+        cantidad: yup
+            .number("Debe ser un valor numérico")
+            .typeError("Campo de cantidad del producto vacio")
+            .positive("No puede ser un número negativo")
+            .integer("Debe ser entero"),
     });
-
 
     const {
         register,
@@ -55,7 +63,28 @@ const CrearProducto = () => {
         resolver: yupResolver(userSchema),
     });
 
+    useEffect(() => {
+        ///Trae todos los productos de la bdd
+        const obtenerProducto = async () => {
+            const productoId = await getProduct(id);
+            setProducto(productoId[0]);
+        };
+        if (existente) {
+            obtenerProducto();
+        }
+    }, [id]);
 
+    useEffect(() => {
+        if (producto.name) {
+            setValue("id", producto.id);
+            setValue("name", producto.name);
+            setValue("marca", producto.marca);
+            setValue("description", producto.description);
+            setValue("price", producto.price);
+            setValue("imgURL", producto.imgURL);
+            setValue("cantidad", producto.cantidad);
+        }
+    }, [producto, setValue]);
 
     const crearProduct = (data) => {
         const DatosProducto = {
@@ -66,37 +95,34 @@ const CrearProducto = () => {
             price: data.price,
             imgURL: data.imgURL,
             cantidad: data.cantidad,
-        }
+        };
         const enviarProducto = async () => {
             const datos = await crearProducto(DatosProducto);
             if (datos) {
                 setError(datos);
             }
-        }
+        };
         const update = async () => {
-            const datos = await actualizarProducto(DatosProducto,id);
+            const datos = await actualizarProducto(DatosProducto, id);
             if (datos) {
                 setError(datos);
             }
-        }
+        };
         if (existente) {
             update();
-        }else{
+        } else {
             enviarProducto();
         }
-        
-
-
     };
     const styleObj = {
         width: "80%",
         height: "40px",
         borderRadius: "8px",
-        border: "1px solid gray"
+        border: "1px solid gray",
     };
 
     return (
-        <Container style={{ marginTop: '70px', marginLeft: "5%" }}>
+        <Container style={{ marginTop: "70px", marginLeft: "5%" }}>
             <Form onSubmit={handleSubmit(crearProduct)}>
                 <Row>
                     <Col xs="6">
@@ -113,7 +139,10 @@ const CrearProducto = () => {
                                 {...register("id")}
                             />
                         </FormGroup>
-                        <Label style={{ color: "red" }}> {errors["id"] ? errors["id"].message : ""}</Label>
+                        <Label style={{ color: "red" }}>
+                            {" "}
+                            {errors["id"] ? errors["id"].message : ""}
+                        </Label>
                     </Col>
                     <Col xs="6">
                         <FormGroup>
@@ -129,7 +158,10 @@ const CrearProducto = () => {
                                 {...register("name")}
                             />
                         </FormGroup>
-                        <Label style={{ color: "red" }}> {errors["name"] ? errors["name"].message : ""}</Label>
+                        <Label style={{ color: "red" }}>
+                            {" "}
+                            {errors["name"] ? errors["name"].message : ""}
+                        </Label>
                     </Col>
                 </Row>
                 <Row>
@@ -161,7 +193,10 @@ const CrearProducto = () => {
                                 {...register("description")}
                             />
                         </FormGroup>
-                        <Label style={{ color: "red" }}> {errors["description"] ? errors["description"].message : ""}</Label>
+                        <Label style={{ color: "red" }}>
+                            {" "}
+                            {errors["description"] ? errors["description"].message : ""}
+                        </Label>
                     </Col>
                 </Row>
 
@@ -194,7 +229,10 @@ const CrearProducto = () => {
                                 {...register("imgURL")}
                             />
                         </FormGroup>
-                        <Label style={{ color: "red" }}> {errors["imgURL"] ? errors["imgURL"].message : ""}</Label>
+                        <Label style={{ color: "red" }}>
+                            {" "}
+                            {errors["imgURL"] ? errors["imgURL"].message : ""}
+                        </Label>
                     </Col>
                 </Row>
 
@@ -221,27 +259,28 @@ const CrearProducto = () => {
                                 <br />
                             </Label>
                         </Col>
-                        <Button color="primary" type="submit">{existente?"Actualizar producto":"Crear Producto"}</Button>
+                        <Button color="primary" type="submit">
+                            {existente ? "Actualizar producto" : "Crear Producto"}
+                        </Button>
                     </Col>
                 </Row>
                 <Row>
-                    {error !== "" ? <Alert color="danger">{"Error: " + error}</Alert> : ""}
+                    {error !== "" ? (
+                        <Alert color="danger">{"Error: " + error}</Alert>
+                    ) : (
+                        ""
+                    )}
                 </Row>
                 <Row style={{ margin: "25px" }}>
                     <Col>
-                    
                         <Link to="/inventario">
                             <Button>Volver</Button>
                         </Link>
                     </Col>
                 </Row>
             </Form>
-
         </Container>
     );
 };
 
-
 export default CrearProducto;
-
-
