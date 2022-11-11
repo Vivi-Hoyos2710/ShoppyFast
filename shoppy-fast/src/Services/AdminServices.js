@@ -52,11 +52,20 @@ export async function crearcupon(codigo, porcentaje) {
     try {
         await axios.post('https://shoppy-fast.herokuapp.com/api/coupon', datosCupon, headers);
         alert("Cupón creado: "+datosCupon.codigo_cupon+" ");
-        window.location.href = '/inventario';
+        window.location.href = '/listacupones';
     } catch (error) {
         return error.response.data.msg
+        
     }
 }
+
+export async function getAllCupones() {
+    const response = await axios.get(
+        `https://shoppy-fast.herokuapp.com/api/coupon`
+    );
+    return response.data;
+}
+
 export async function deleteProduct(id) {
     const headers = conseguirConfiguracionDeAutenticacion();
     try {

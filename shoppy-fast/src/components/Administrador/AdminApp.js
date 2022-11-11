@@ -4,6 +4,7 @@ import Header from '../Usuario/Header';
 import Inventario from './Inventario';
 import CrearProducto from './CrearProducto';
 import CrearCupon from './CrearCupon';
+import ListaCupones from './ListaCupones';
 
 const adminForm={
     "email" : "",
@@ -20,6 +21,7 @@ function AdminApp() {
                 <Route path='/crearproducto' element={<CrearProducto admin={admin} />} />
                 <Route path="inventario/:id/editar/" element={<CrearProducto admin={admin} />} />
                 <Route path='/crearcupon' element={<CrearCupon admin={admin} />} />
+                <Route path='/listacupones' element={<ListaCupones/>} />
             </Routes>
         </BrowserRouter>
     )

@@ -80,7 +80,7 @@ const CrearCupon = () => {
                 </Row>
                 <Row style={{ margin: "70px" }}>
                     <Col>
-                        <Link to="/inventario">
+                        <Link to="/listacupones">
                             <Button color="danger">Volver</Button>
                         </Link>
                     </Col>

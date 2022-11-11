@@ -21,8 +21,8 @@ const Inventario = () => {
                 <Button color="primary" >Crear Producto
                 </Button>
             </Link>
-            <Link to="/crearcupon">
-                <Button color="primary" >Crear Cupon
+            <Link to="/listacupones">
+                <Button color="primary" >Administrar Cupones
                 </Button>
             </Link>
             
